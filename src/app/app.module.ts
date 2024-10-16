@@ -1,0 +1,23 @@
+import { NgModule } from '@angular/core';
+import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppLayoutModule } from './layout/app.layout.module';
+
+import { ProductService } from './demo/service/product.service';
+import { PhotoService } from './demo/service/photo.service';
+import { ReactiveFormsModule } from '@angular/forms';
+
+@NgModule({
+    declarations: [AppComponent],
+    imports: [AppRoutingModule, AppLayoutModule],
+    providers: [
+        { provide: LocationStrategy, 
+            useClass: PathLocationStrategy },
+              PhotoService,
+         ProductService,
+         ReactiveFormsModule
+    ],
+    bootstrap: [AppComponent],
+})
+export class AppModule {}
