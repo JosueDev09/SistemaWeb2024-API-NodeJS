@@ -10,6 +10,6 @@ export class AuthService {
   constructor(private https:HttpClient) { }
 
   fnlogin(loginObj:any){
-    return this.https.post<any>(`${this.url}Login/authenticate`,loginObj)
+    return this.https.post<any>(`${this.url}auth/login`,loginObj)
   }
 }

@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit{
 
     ngOnInit(): void {
         this.loginForm = this.fb.group({
-          strUsuario:['',Validators.required],
-          strContraseña:['',Validators.required]
+          strUser:['',Validators.required],
+          strPassword:['',Validators.required]
         })
       }
 
@@ -37,11 +37,11 @@ export class LoginComponent implements OnInit{
                
           this.auth.fnlogin(this.loginForm.value).subscribe({
             next: (res: any) => {
-              if (res == true) {
+              if (res.success == true) {
                 let timerInterval;
                 Swal.fire({
-                  title: "Iniciando sesión",
-                  html: "Se cerrara en automatico <b></b> milisegundos.",
+                  title: "Loggin In",
+                  html: "It will close automatically <b></b> miliseconds.",
                   timer: 2000,
                   timerProgressBar: true,
                   didOpen: () => {
@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit{
                 Swal.fire({ 
                   position: "center",
                   icon: "error",
-                  title: "Sesión inválida",
+                  title: "Invalid Session",
                   showConfirmButton: false,
                   timer: 1500
                 });
@@ -80,8 +80,14 @@ export class LoginComponent implements OnInit{
               }
             },
             error: (err) => {
-              // Manejar errores de la llamada a la API
-              console.error(err);
+              Swal.fire({ 
+                position: "center",
+                icon: "error",
+                title: "Invalid Session",
+                showConfirmButton: false,
+                timer: 1500
+              });
+              this.loginForm.reset();
             }
           });
         } else {
@@ -90,7 +96,7 @@ export class LoginComponent implements OnInit{
           Swal.fire({ 
             position: "center",
             icon: "error",
-            title: "Sesión inválida",
+            title: "Invalid Session",
             showConfirmButton: false,
             timer: 1500
           });
