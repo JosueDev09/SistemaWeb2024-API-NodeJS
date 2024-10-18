@@ -1,7 +1,7 @@
 <div class="layout-topbar">
-    <a class="layout-topbar-logo" routerLink="">
+    <a class="layout-topbar-logo" routerLink="../dashboard">
         <img src="" alt="">
-        <span>Sistema Administrador</span>
+        <span>Sistema</span>
     </a>
 
     <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
@@ -19,7 +19,7 @@
             <i class="pi pi-user"></i>
             <span>Perfil</span>
         </button>
-        <button class="p-link layout-topbar-button" [routerLink]="'/'">
+        <button class="p-link layout-topbar-button" (click)="fnLogout()">
             <i class="pi pi-sign-out"></i>
             <span>Cerrar Sessión</span>
         </button>

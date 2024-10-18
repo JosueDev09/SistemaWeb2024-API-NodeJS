@@ -12,6 +12,13 @@ export class UsersService {
   private url: string = environment.apiUrl;
   constructor(private https:HttpClient) { }
 
+  getDashboard(): Observable<any> {
+    return this.https.get(`${this.url}/Administracion/Empleados`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}` // Asegúrate de agregar el token de autorización
+      }
+    });
+  }
   listEmpleados() {
     return this.https.get(this.url + 'Administracion/Empleados');
   }

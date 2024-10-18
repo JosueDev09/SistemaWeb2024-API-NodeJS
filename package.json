@@ -5,12 +5,13 @@
     "type": "module",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve",
+        "start": "ng serve ",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "dev": "node src/api/index.js"
+        "dev": "nodemon  src/api/index.js"
+        
     },
     "private": true,
     "dependencies": {
@@ -35,6 +36,7 @@
         "dotenv": "^16.4.5",
         "express": "^4.21.1",
         "jsonwebtoken": "^9.0.2",
+        "jwt-decode": "^4.0.0",
         "morgan": "^1.10.0",
         "mssql": "^11.0.1",
         "mysql2": "^3.11.3",

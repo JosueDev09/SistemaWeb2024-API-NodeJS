@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit{
             next: (res: any) => {
               if (res.success == true) {
                 let timerInterval;
+                localStorage.setItem('token', res.token);
                 Swal.fire({
                   title: "Loggin In",
                   html: "It will close automatically <b></b> miliseconds.",
@@ -62,11 +63,27 @@ export class LoginComponent implements OnInit{
                 }).then((result) => {
                   if (result.dismiss === Swal.DismissReason.timer) {
                     this.loginForm.reset();
-                    this.router.navigate(['/dashboard']);
+                    // this.router.navigate(['/dashboard'])
+                    this.auth.getDashboard().subscribe({
+                    next: (dashboardRes) => {
+                    if (dashboardRes.success == true) {
+                      this.router.navigate([dashboardRes.redirectTo]);
+                    }
+                  },
+                  error: (err) => {
+                    console.error(err);
+                    Swal.fire({
+                      position: "center",
+                      icon: "error",
+                      title: "Error fetching dashboard",
+                      showConfirmButton: false,
+                      timer: 1500
+                    });
                   }
                 });
-                
-              } else {
+              }
+            });
+          } else {
                 // Inicio de sesión fallido
                 Swal.fire({ 
                   position: "center",

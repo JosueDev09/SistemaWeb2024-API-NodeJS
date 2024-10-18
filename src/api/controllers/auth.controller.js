@@ -16,48 +16,6 @@ function generateToken() {
   }
 
   //This function verify if exist the users 
-// export const loginSession = async(req, res) => {
-
-//       try {
-//         const { 
-//           //This parameters should be send from to front and verify if the name is the same in database
-//           strUser,
-//           strPassword
-//         } = req.body;
-        
-//         // console.log("Este console log",req.body)
-             
-//       const connection = await getConnection();
-      
-//       // Execute stored procedure
-//       const [results] = await connection.execute('CALL thewebsystem2024.sp_authLoginUsuario(?, ?)', [strUser, strPassword]);
-
-//       console.log("Entro", [results]);
-  
-//       // The answers from stored procedure is in results[0]
-//       const [rows] = results;
-//         if (rows.length === 0) { //This is a cicle for find the result
-//             return res.status(401).json({ message: "Failed Authentication" });
-//         }
-  
-//         const user = results[0][0]; // Get first result
-  
-//         console.log(user);
-//         // Verify data
-//         if (strUser === user.strUser && strPassword === user.strPass) {
-//             const token = jwt.sign({ strUser, rol }, secretKey, { expiresIn: "1h" });
-  
-//             console.log(token);
-//             return res.status(200).json({ message: "Generate Succesfully", token });
-//         } else {
-//             return res.status(401).json({ message: "Failed Authentication" });
-//         }      
-        
-//       } catch (error) {
-//           return res.status(500).json({ message: res });
-//         }
-    
-//   }
 
 export const loginSession = async (req, res) => {
   try {
@@ -71,34 +29,25 @@ export const loginSession = async (req, res) => {
       if (!strUser || !strPassword) {
           return res.status(400).json({ message: "Faltan parámetros" });
       }
-      // const parameter =(
-      //   strUser,
-      //   strPassword
-      // )
-
-      
+          
 
       const connection = await getConnection();
 
-      console.log("Se conecto el controlador")
+     // console.log("Se conecto el controlador")
      const [results] = await connection.execute('CALL sp_authLoginUsuario(?, ?)', [strUser,strPassword]);
 
       const user = results[0][0]; // Asegúrate de acceder correctamente al primer resultado
-     console.log(user);
+    // console.log(user);
       // Verificar si se encontró un usuario
       
           // Comparar los datos de autenticación
        
           if (strUser === user.strUser && strPassword === user.strPassword) {
-            const token = jwt.sign({ strUser }, secretKey, { expiresIn: "1h" });
-            return res.status(200).json({success:true, message: "Generated Successfully", token });
+            const token = jwt.sign({ strUser,strPassword, intRol: user.intRol }, secretKey, { expiresIn: "1m" });
+            return res.status(200).json({success:true, message: "Generated Successfully", token, rol: user.intRol });
         }
        
           return res.status(401).json({ success: false, message: "Failed Authentication" });
-    
-          
-     
-
         
 
   } catch (error) {
@@ -109,8 +58,21 @@ export const loginSession = async (req, res) => {
 
   export const verifyTokenAccess = async(req, res) => 
     {
-        return res.status(200).json({ message: "Tienes permitido ver esta pantalla" });
+        return res.status(200).json({ message: "Tienes permitido ver esta pantalla", success: true, redirectTo: '/dashboard' });
     }
+
+
+export const getHome = (req, res) => {
+  const userRole = req.intRol; // Suponiendo que guardas el rol en el token
+
+  if (userRole === 1) {
+      return res.status(200).json({ success: true, redirectTo: '/dashboard' }); // Redirigir a la pantalla de administrador
+  } else if (userRole === 2) {
+      return res.redirect('/user-dashboard'); // Redirigir a la pantalla de usuario
+  } else {
+      return res.status(403).send({ message: 'Acceso denegado.' });
+  }
+};
 
     //This function is to validate the register account with token generate to register
 export const verifyTokenEmail = async(req, res) => 
