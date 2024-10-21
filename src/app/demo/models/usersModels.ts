@@ -1,21 +1,22 @@
 export class Users1{
-    idEmpleados?:number = 0;
-     strEmpleado? : string = '';
-     strNombre? : string= '';
-     strTelefono? : string= '' ;
-     strEmail? : string= '';
-    intPuesto?:number= 0;
-    strEstatus?:string= '';
-    Estatus?:string= '';
+    intUser?:number = 0;
+    FullName? : string = '';
+    strNombre? : string= '';
+    phone? : string= '' ;
+    email? : string= '';
+    intRolId?:number= 0;
+   // strRolName?:string = '';
+    strStatus?:string= '';
+    intEstatus?:string= '';
 }
 export interface Users{
-    idEmpleados?:number;
-     strEmpleado? : string;
-     strNombre? : string;
-     strTelefono? : string;
-     strEmail? : string;
-    intPuesto?:number;
-    strPuesto?:string;
-    strEstatus?:number;
-    Estatus?:string;
+    intUser?:number;
+    FullName? : string;
+    strNombre? : string;
+    phone? : string;
+    email? : string;
+    intRolId?:number;
+    strRolName?:string;
+    intEstatus?:number;
+    strStatus?:string;    
 }

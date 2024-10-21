@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import authRoutes from './routes/auth.routes.js';
+import employeesRoutes from './routes/employees.routes.js';
 
 
 
@@ -16,5 +17,6 @@ app.use(express.json());
 
 
 app.use('/api/',authRoutes);
+app.use('/api/',employeesRoutes);
 
 export default app;

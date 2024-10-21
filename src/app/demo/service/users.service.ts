@@ -13,14 +13,17 @@ export class UsersService {
   constructor(private https:HttpClient) { }
 
   getDashboard(): Observable<any> {
-    return this.https.get(`${this.url}/Administracion/Empleados`, {
+    return this.https.get(`${this.url}/Administracion/EmployeesList`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}` // Asegúrate de agregar el token de autorización
       }
     });
   }
-  listEmpleados() {
-    return this.https.get(this.url + 'Administracion/Empleados');
+  // listEmpleados() {
+  //   return this.https.get(this.url + 'Administracion/Empleados');
+  // }
+  listEmployees(): Observable<Users[]> {
+    return this.https.get<Users[]>(this.url + 'Administration/EmployeesList');
   }
 //   listEmpleados1() {
 //     return this.https.get<any>(this.url + 'Administracion/Empleados')
@@ -28,13 +31,13 @@ export class UsersService {
 //         .then(res => res.data as Users[])
 //         .then(data => data);
 // }
-  listPuestosR():Observable<any[]>  {
-    return this.https.get<any>(this.url + 'Administracion/ListaPuestos');
+  listRol():Observable<any[]>  {
+    return this.https.get<any>(this.url + 'Administration/RoleList');
   }
-  addEmpleados(empleados:Users1):Observable<Users1> {
-    return this.https.post<Users1>(this.url +'Administracion/SaveEmpleados',empleados);
+  addEmployees(employees:Users1):Observable<Users1> {
+    return this.https.post<Users1>(this.url +'Administration/SaveEmpleados',employees);
   }
-  updateEmpleados( empleados:Users1):Observable<Users1> {
-    return this.https.post<Users1>(this.url +'Administracion/UpdateEmpleados',empleados);
+  updateEmployees( employees:Users1):Observable<Users1> {
+    return this.https.post<Users1>(this.url +'Administration/UpdateEmpleados',employees);
   }
 }

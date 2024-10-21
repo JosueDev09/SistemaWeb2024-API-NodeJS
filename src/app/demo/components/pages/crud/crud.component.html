@@ -7,13 +7,13 @@
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
-                        <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success mr-2"  (click)="openNew(); "></button>
+                        <button pButton pRipple label="New Employee" icon="pi pi-plus" class="p-button-success mr-2"  (click)="openNew(); "></button>
                         <!-- <button pButton pRipple label="Eliminar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
                     </div>
                 </ng-template>
 
                 <ng-template pTemplate="right">
-                 <button pButton pRipple label="Exportar" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                 <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
                 </ng-template>
             </p-toolbar>
             <!-- AQUI SE DELARA LO QUE VIENE DE LA LISTA DE MI FUNCION DE TS <p-table #dt [value]="user"  -->
@@ -25,15 +25,15 @@
             [paginator]="true" 
             [rowsPerPageOptions]="[10,20,30]" 
             [showCurrentPageReport]="true" 
-            currentPageReportTemplate="Mostar {first} a {last} de {totalRecords} empleados" 
+            currentPageReportTemplate="Show {first} to {last} of {totalRecords} employees" 
             
             [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Empleados</h5>
+                        <h5 class="m-0">Employees</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar empleado..."  class="w-full sm:w-auto"/>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search employee..."  class="w-full sm:w-auto"/>
                         </span>
                     </div>
                 </ng-template>
@@ -43,12 +43,12 @@
                         <th style="width: 3rem">
                             <!-- <p-tableHeaderCheckbox></p-tableHeaderCheckbox> -->
                         </th>
-                        <th pSortableColumn="strEmpleado">Usuario <p-sortIcon field="strEmpleado"></p-sortIcon></th>
-                        <th pSortableColumn="strNombre">Nombre </th>
-                        <th pSortableColumn="strPuesto">Puesto </th>
-                        <th pSortableColumn="strTelefono">Telefono </th>
-                        <th pSortableColumn="strEmail">Correo </th>
-                        <th pSortableColumn="inventoryStatus">Estatus </th>
+                        <th pSortableColumn="intUser">User Id <p-sortIcon field="intUser"></p-sortIcon></th>
+                        <th pSortableColumn="FullName">Full Name </th>
+                        <th pSortableColumn="strRolName">Rol </th>
+                        <th pSortableColumn="phone">Phone </th>
+                        <th pSortableColumn="email">Email </th>
+                        <th pSortableColumn="strStatus">Status</th>
                         <th></th>
                     </tr>
                 </ng-template>
@@ -57,27 +57,27 @@
                         <td>
                             <!-- <p-tableCheckbox [value]="user"></p-tableCheckbox> -->
                         </td>
-                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Empleado</span>
-                            {{user.strEmpleado}}
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">User Id</span>
+                            {{user.intUser}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Nombre</span>
-                            {{user.strNombre}}
+                            <span class="p-column-title">Full Name</span>
+                            {{user.FullName}}
                         </td>
-                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Puesto</span>                           
-                            {{user.strPuesto}}
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Rol</span>                           
+                            {{user.strRolName}}
                         </td>
                         <td style="width:14%; min-width:8rem;">
-                            <span class="p-column-title">Telefono</span>
-                            {{user.strTelefono}}
+                            <span class="p-column-title">Phone</span>
+                            {{user.phone}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Correo</span>
-                            {{user.strEmail}}
+                            <span class="p-column-title">Email</span>
+                            {{user.email}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Estatus</span>
-                            <span [class]="'product-badge status-' + (user.estatus ? user.estatus.toLowerCase() : '')">{{user.estatus}}</span>
+                            <span class="p-column-title">Status</span>
+                            <span [class]="'product-badge status-' + (user.strStatus ? user.strStatus.toLowerCase() : '')">{{user.strStatus}}</span>
                            
                         </td>
                        
@@ -86,7 +86,7 @@
                         </td> -->
                         <td>
                             <div class="flex">
-                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="fnUpdateEmpleado(user)"></button>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="fnUpdateEmployee(user)"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
                             </div>
                         </td>
@@ -96,47 +96,47 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="productDialog" [style]="{width: '450px'}" header="Empleados" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="employeesDialog" [style]="{width: '450px'}" header="Add Employee" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">             
                 <div class="field">
-                    <label for="usuario">Usuario</label>
-                    <input type="text" pInputText id="usuario" [(ngModel)]="user1.strEmpleado" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.strEmpleado}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strEmpleado">Usuario es requerido.</small>
+                    <label for="usuario">User Id</label>
+                    <input type="text" pInputText id="intUser" [(ngModel)]="user1.intUser" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.intUser}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.intUser">User is required.</small>
                 </div>
                 <div class="field">
-                    <label for="nombre">Nombre Completo</label>
-                    <input type="text" pInputText id="nombre" [(ngModel)]="user1.strNombre" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.strNombre}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strNombre">Nombre es requerido.</small>
+                    <label for="nombre">Full Name</label>
+                    <input type="text" pInputText id="strName" [(ngModel)]="user1.FullName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.FullName}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.FullName">Full Name is required.</small>
                 </div>
                 <div class="field">
-                    <label for="correo">Correo</label>
-                    <input type="text" pInputText id="correo" [(ngModel)]="user1.strEmail" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.strEmail}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strEmail">Correo es requerido.</small>
+                    <label for="correo">Email</label>
+                    <input type="text" pInputText id="strEmail" [(ngModel)]="user1.email" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.email}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.email">Email is required.</small>
                 </div>
                 <div class="field">
-                    <label for="telefono">Telefono</label>
-                    <input type="text" pInputText id="telefono" [(ngModel)]="user1.strTelefono" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.strTelefono}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strTelefono">Telefono es requerido.</small>
+                    <label for="telefono">Phone</label>
+                    <input type="text" pInputText id="strPhone" [(ngModel)]="user1.phone" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.phone}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.phone">Phone is required.</small>
                 </div>                               
                 <div class="field">
-                    <label for="puesto">Puesto</label>
+                    <label for="puesto">Rol</label>
                     <p-dropdown 
                         [options]="listPuestoR" 
-                        [(ngModel)]="user1.intPuesto" 
-                        optionLabel="strPuesto"
-                        optionValue="intPuesto"
+                        [(ngModel)]="user1.intRolId" 
+                        optionLabel="strRolName"
+                        optionValue="intRolId"
                         [showClear]="true"
-                        placeholder="--------SELECCIONE---------" />
+                        placeholder="--------SELECT---------" />
                 </div>
                 <div class="field">
-                    <label class="mb-3">Estatus</label>
+                    <label class="mb-3">Status</label>
                     <div class="formgrid grid">
                         <div class="field-radiobutton col-6">
-                            <p-radioButton id="estatus" name="chkestatus" value="1" [(ngModel)]="user1.strEstatus"></p-radioButton>
+                            <p-radioButton id="intStatus" name="chkestatus" value="1" [(ngModel)]="user1.strStatus"></p-radioButton>
                             <label for="estatus">Activo</label>
                         </div>
                         <div class="field-radiobutton col-6">
-                            <p-radioButton id="estatus" name="chkestatus" value="0" [(ngModel)]="user1.strEstatus"></p-radioButton>
+                            <p-radioButton id="estatus" name="chkestatus" value="0" [(ngModel)]="user1.strStatus"></p-radioButton>
                             <label for="estatus">Baja</label>
                         </div>
                        
@@ -147,53 +147,53 @@
             </ng-template>
 
             <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" (click)=" fnAddEmpleados(user1)"></button>
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideAddDialog()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)=" fnAddEmpleados(user1)"></button>
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="userDialog" [style]="{width: '450px'}" header="Empleados" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="employeeUpdateDialog" [style]="{width: '450px'}" header="Update Employee" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">             
                 <div class="field">
-                    <label for="usuario">Usuario</label>
-                    <input disabled type="text" pInputText id="usuario" [(ngModel)]="user1.strEmpleado" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.strEmpleado}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strEmpleado">Usuario es requerido.</small>
+                    <label for="usuario">User Id</label>
+                    <input disabled type="text" pInputText id="intUser" [(ngModel)]="user1.intUser" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.intUser}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.intUser">User is required.</small>
                 </div>
                 <div class="field">
-                    <label for="nombre">Nombre Completo</label>
-                    <input type="text" pInputText id="nombre" [(ngModel)]="user1.strNombre" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.strNombre}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strNombre">Nombre es requerido.</small>
+                    <label for="nombre">Full Name</label>
+                    <input type="text" pInputText id="strName" [(ngModel)]="user1.FullName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.FullName}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.FullName">Full Name is required.</small>
                 </div>
                 <div class="field">
-                    <label for="correo">Correo</label>
-                    <input type="text" pInputText id="correo" [(ngModel)]="user1.strEmail" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.strEmail}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strEmail">Correo es requerido.</small>
+                    <label for="correo">Email</label>
+                    <input type="text" pInputText id="strEmail" [(ngModel)]="user1.email" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.email}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.email">Email is required.</small>
                 </div>
                 <div class="field">
-                    <label for="telefono">Telefono</label>
-                    <input type="text" pInputText id="telefono" [(ngModel)]="user1.strTelefono" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.strTelefono}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strTelefono">Telefono es requerido.</small>
+                    <label for="telefono">Phone</label>
+                    <input type="text" pInputText id="strPhone" [(ngModel)]="user1.phone" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.phone}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.phone">Phone is required.</small>
                 </div>                               
                 <div class="field">
-                    <label for="puesto">Puesto</label>
+                    <label for="puesto">Rol</label>
                     <p-dropdown 
                         [options]="listPuestoR" 
-                        [(ngModel)]="user1.intPuesto" 
-                        optionLabel="strPuesto"
-                        optionValue="intPuesto"
+                        [(ngModel)]="user1.intRolId" 
+                        optionLabel="strRolName"
+                        optionValue="intRolId"
                         [showClear]="true"
-                        placeholder="--------SELECCIONE---------" />
+                        placeholder="--------SELECT---------" />
                 </div>
                 <div class="field">
-                    <label class="mb-3">Estatus</label>
+                    <label class="mb-3">Status</label>
                     <div class="formgrid grid">
                         <div class="field-radiobutton col-6">
-                            <p-radioButton id="estatus" name="chkestatus" value="1" [(ngModel)]="user1.strEstatus"></p-radioButton>
-                            <label for="estatus">Activo</label>
+                            <p-radioButton id="intStatus" name="chkestatus" value="1" [(ngModel)]="user1.intEstatus"></p-radioButton>
+                            <label for="estatus">Active</label>
                         </div>
                         <div class="field-radiobutton col-6">
-                            <p-radioButton id="estatus" name="chkestatus" value="0" [(ngModel)]="user1.strEstatus"></p-radioButton>
-                            <label for="estatus">Baja</label>
+                            <p-radioButton id="estatus" name="chkestatus" value="0" [(ngModel)]="user1.intEstatus"></p-radioButton>
+                            <label for="estatus">Inactive</label>
                         </div>
                        
                     </div>
@@ -203,8 +203,8 @@
             </ng-template>
 
             <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideUserDialog()"></button>
-                <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" (click)=" fnUpdateEmpleados(user1)"></button>
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideemployeeUpdateDialog()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)=" fnUpdateEmployees(user1)"></button>
             </ng-template>
         </p-dialog>
 

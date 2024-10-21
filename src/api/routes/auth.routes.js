@@ -11,8 +11,8 @@ router.post('/auth/login', loginSession);
 //router.post('/auth/registerClient', registerClients,verifyTokenAccess);
 
  router.get("/dashboard", verifyToken,verifyTokenAccess);
- router.get("/Administracion/ListaPuestos", verifyToken,verifyTokenAccess);
- router.get("/Administracion/Empleados", verifyToken,verifyTokenAccess);
+//  router.get("/Administracion/ListaPuestos", verifyToken,verifyTokenAccess);
+//  router.get("/Administracion/Empleados", verifyToken,verifyTokenAccess);
 // router.get("/dashboard", verifyToken,verifyTokenAccess) //Esta ruta lo que haces es redirigir las pantallas del admijn y validar si hay un auth 
 
  router.get("/auth/verify-email",verifyTokenEmail) 

@@ -7,34 +7,33 @@ import { Users, Users1 } from 'src/app/demo/models/usersModels';
 import { UsersService } from 'src/app/demo/service/users.service';
 import Swal from 'sweetalert2'
 import { asRoughMinutes } from '@fullcalendar/core/internal';
+import { TableModule } from 'primeng/table';
 
 @Component({
     templateUrl: './crud.component.html',
     providers: [MessageService]
 })
 export class CrudComponent implements OnInit {
-    users:Users[]=[];
-    user: Users = {};
+   
+//Is initialized when get user from database
+     users:Users[]=[];
+     user: Users = {};
+    
 
     users1:Users1[]=[];
     user1: Users1 = {};
-    // selectEmpleados:Users = new Users();
-    modalService: any;
-    //listPuestosR:any=[];
+   
+
     strEmpleado:any;
     listPuestoR: any[] = [];
 
-    userDialog: boolean = false;
+    employeeUpdateDialog: boolean = false;
 
-    productDialog: boolean = false;
+    employeesDialog: boolean = false;
 
     deleteProductDialog: boolean = false;
 
     deleteProductsDialog: boolean = false;
-
-    products: Product[] = [];
-
-    product: Product = {};
 
     selectedProducts: Product[] = [];
 
@@ -50,8 +49,8 @@ export class CrudComponent implements OnInit {
 
     ngOnInit() {
         //  this.usersService.listEmpleados1().then(data => this.users = data);
-         this.fnlistEmpleados(); 
-         this.fnPuestosR();
+          this.fnlistEmployees(); 
+          this.fnListRol();
         // this.cols = [
         //     { field: 'strEmpleado', header: 'Empleado' },
         //     { field: 'strNombre', header: 'Nombre' },
@@ -64,11 +63,11 @@ export class CrudComponent implements OnInit {
 
     }
 
-    fnlistEmpleados () {
-        this.usersService.listEmpleados().subscribe(
-          res => {
-           this.user= res;
-            console.log(res);
+    fnlistEmployees () {
+        this.usersService.listEmployees().subscribe(
+          (res:any) => {
+            this.user= res[0];
+          //  console.log(res);
       
           }, error => {
             console.log(error);
@@ -77,8 +76,8 @@ export class CrudComponent implements OnInit {
         );
       }
       
-      fnPuestosR(){
-        this.usersService.listPuestosR().subscribe(
+      fnListRol(){
+        this.usersService.listRol().subscribe(
           res => {
             this.listPuestoR=res;
             console.log(res);
@@ -88,15 +87,15 @@ export class CrudComponent implements OnInit {
         );
           }
 
-          fnAddEmpleados(empleados:Users1):void{
+          fnAddEmployees(employees:Users1):void{
             // alert("entro")
-             this.usersService.addEmpleados(empleados).subscribe(
+             this.usersService.addEmployees(employees).subscribe(
                res=>{
                if(res){
-                this.messageService.add({ severity: 'success', summary: 'Correctamente', detail: 'Empleado Creado', life: 3000 });
+                this.messageService.add({ severity: 'success', summary: 'Succsesfully', detail: 'Created Employee', life: 3000 });
                  console.log(res);
                  this.fnClear();
-                 this.fnlistEmpleados();
+                 this.fnlistEmployees();
                }
                else{
                  alert("Error")
@@ -105,36 +104,37 @@ export class CrudComponent implements OnInit {
            }
          
            fnClear(){
-             this.user.strEmpleado='';
+             this.user.FullName='';
              this.user.strNombre='';
-             this.user.strTelefono='';
-             this.user.strEmail='';
-             this.user.strPuesto='';
-             this.user.intPuesto=0;
+             this.user.phone='';
+             this.user.email='';
+             this.user.strRolName='';
+             this.user.intRolId=0;
            }
          
-           fnUpdateEmpleado(select:any)
+           fnUpdateEmployee(select:any)
            {
-            this.user1.strEmpleado = select.strEmpleado;
-            this.user1.strNombre = select.strNombre;
-            this.user1.strTelefono = select.strTelefono;
-            this.user1.strEmail = select.strEmail;    
-            this.user1.intPuesto = select.intPuesto;
-            this.user1.strEstatus = select.strEstatus;    
-            this.userDialog = true;
+            this.user1.intUser = select.intUser;
+            this.user1.FullName = select.FullName;
+            this.user1.phone = select.phone;
+            this.user1.email = select.email;    
+            this.user1.intRolId = select.intRolId;
+            // this.user1.strRolName = select.strRolName;
+            this.user1.intEstatus = select.intEstatus;    
+            this.employeeUpdateDialog = true;
            
            }
          
-           fnUpdateEmpleados(empleados:Users1):void{
+           fnUpdateEmployees(employees:Users1):void{
              // alert("entro")
-              this.usersService.updateEmpleados(empleados).subscribe(
+              this.usersService.updateEmployees(employees).subscribe(
                 res=>{
                 
                 if(res){
-                  this.messageService.add({ severity: 'success', summary: 'Correctamente', detail: 'Empleado Actualizado', life: 3000 });
+                  this.messageService.add({ severity: 'success', summary: 'Succsesfully', detail: 'Employee Updated', life: 3000 });
                   console.log(res);
                   
-                  this.fnlistEmpleados();
+                  this.fnlistEmployees();
                 }
                 else{
                   alert("Error")
@@ -145,42 +145,42 @@ export class CrudComponent implements OnInit {
     openNew() {
         this.user1 = {};
         this.submitted = false;
-        this.productDialog = true;
+        this.employeesDialog = true;
     }
 
-    editProduct(product: Product) {
-        this.product = { ...product };
-        this.productDialog = true;
-    }
+    // editEmployee(product: Product) {
+    //   //  this.product = { ...product };
+    //     this.employeesDialog = true;
+    // }
 
-    deleteProduct(product: Product) {
-        this.deleteProductDialog = true;
-        this.product = { ...product };
-    }
+    // deleteProduct(product: Product) {
+    //     this.deleteProductDialog = true;
+    //    // this.product = { ...product };
+    // }
 
     confirmDeleteSelected() {
         this.deleteProductsDialog = false;
-        this.products = this.products.filter(val => !this.selectedProducts.includes(val));
+       // this.products = this.products.filter(val => !this.selectedProducts.includes(val));
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
         this.selectedProducts = [];
     }
 
     confirmDelete() {
         this.deleteProductDialog = false;
-        this.products = this.products.filter(val => val.id !== this.product.id);
+        //this.products = this.products.filter(val => val.id !== this.product.id);
         this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-        this.product = {};
+       // this.product = {};
     }
 
-    hideDialog() {
+    hideAddDialog() {
         this.user1 = {};
-        this.productDialog = false;
+        this.employeesDialog = false;
         this.submitted = false;
     }
 
-    hideUserDialog() {
+    hideemployeeUpdateDialog() {
         this.user1 = {};
-        this.userDialog = false;
+        this.employeeUpdateDialog = false;
         this.submitted = false;
     }
 
@@ -211,12 +211,12 @@ export class CrudComponent implements OnInit {
 
     findIndexById(id: string): number {
         let index = -1;
-        for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].id === id) {
-                index = i;
-                break;
-            }
-        }
+        // for (let i = 0; i < this.products.length; i++) {
+        //     if (this.products[i].id === id) {
+        //         index = i;
+        //         break;
+        //     }
+        // }
 
         return index;
     }

@@ -7,10 +7,11 @@ import { AppLayoutModule } from './layout/app.layout.module';
 import { ProductService } from './demo/service/product.service';
 import { PhotoService } from './demo/service/photo.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [AppRoutingModule, AppLayoutModule],
+    imports: [AppRoutingModule, AppLayoutModule,TableModule],
     providers: [
         { provide: LocationStrategy, 
             useClass: PathLocationStrategy },

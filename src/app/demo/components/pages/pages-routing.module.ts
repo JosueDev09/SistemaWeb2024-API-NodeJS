@@ -4,9 +4,9 @@ import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [RouterModule.forChild([
-        { path: 'empleados', loadChildren: () => import('./crud/crud.module').then(m => m.CrudModule), },
+        { path: 'Employees', loadChildren: () => import('./crud/crud.module').then(m => m.CrudModule), },
         { path: 'empty', loadChildren: () => import('./empty/emptydemo.module').then(m => m.EmptyDemoModule) },
-        { path: '**', redirectTo: '/empleados' }
+        { path: '**', redirectTo: '/Employees' }
     ])],
     exports: [RouterModule]
 })

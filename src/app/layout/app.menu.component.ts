@@ -15,7 +15,7 @@ export class AppMenuComponent implements OnInit {
     ngOnInit() {
         this.model = [
             {
-                label: 'Inicio',
+                label: 'Home',
                 items: [
                     { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/dashboard'] }
                 ]
@@ -23,43 +23,43 @@ export class AppMenuComponent implements OnInit {
             
             
             {
-                label: 'Administración',
+                label: 'Administration',
                 icon: 'pi pi-fw pi-briefcase',
                 items: [
                   
                     {
-                        label: 'Empleados',
+                        label: 'Employees',
                         icon: 'pi pi-fw pi-users',
-                        routerLink: ['/administracion/empleados']
+                        routerLink: ['/administration/Employees']
                     },
                     
                     {
                         label: 'Empty',
                         icon: 'pi pi-fw pi-circle-off',
-                        routerLink: ['/administracion/empty']
+                        routerLink: ['/administration/empty']
                     },
                 ]
             },
             {
-                label: 'Inventario',
+                label: 'Inventory ',
                 icon: 'pi pi-fw pi-briefcase',
                 items: [
                   
                     {
-                        label: 'Productos',
+                        label: 'Products',
                         icon: 'pi pi-fw pi-box',
-                        routerLink: ['/inventario/productos']
+                        routerLink: ['/inventory/products']
                     },
                     {
-                        label: 'Categorias',
+                        label: 'Categories',
                         icon: 'pi pi-fw pi-book',
-                        routerLink: ['/inventario/categorias']
+                        routerLink: ['/inventory/categories']
                     },
                     
                     {
                         label: 'Empty',
                         icon: 'pi pi-fw pi-circle-off',
-                        routerLink: ['/inventario/empty']
+                        routerLink: ['/inventory/empty']
                     },
                 ]
             },
