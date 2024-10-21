@@ -19,25 +19,28 @@ export class UsersService {
       }
     });
   }
-  // listEmpleados() {
-  //   return this.https.get(this.url + 'Administracion/Empleados');
-  // }
-  listEmployees(): Observable<Users[]> {
-    return this.https.get<Users[]>(this.url + 'Administration/EmployeesList');
-  }
-//   listEmpleados1() {
-//     return this.https.get<any>(this.url + 'Administracion/Empleados')
-//         .toPromise()
-//         .then(res => res.data as Users[])
-//         .then(data => data);
-// }
-  listRol():Observable<any[]>  {
-    return this.https.get<any>(this.url + 'Administration/RoleList');
-  }
-  addEmployees(employees:Users1):Observable<Users1> {
-    return this.https.post<Users1>(this.url +'Administration/SaveEmpleados',employees);
-  }
-  updateEmployees( employees:Users1):Observable<Users1> {
-    return this.https.post<Users1>(this.url +'Administration/UpdateEmpleados',employees);
-  }
+ 
+    // Method to retrieve a list of employees
+    listEmployees(): Observable<Users[]> {
+      // Sends a GET request to the specified URL and returns an Observable of Users array
+      return this.https.get<Users[]>(this.url + 'Administration/EmployeesList');
+    }
+
+    // Method to retrieve a list of roles
+    listRol(): Observable<any[]> {
+      // Sends a GET request to the specified URL and returns an Observable of any array (roles)
+      return this.https.get<any>(this.url + 'Administration/RoleList');
+    }
+
+    // Method to add a new employee
+    addEmployees(employees: Users1): Observable<Users1> {
+      // Sends a POST request with employee data to save a new employee and returns an Observable of Users1
+      return this.https.post<Users1>(this.url + 'Administration/SaveEmployees', employees);
+    }
+
+    // Method to update an existing employee
+    updateEmployees(employees: Users1): Observable<Users1> {
+      // Sends a POST request with updated employee data to update an existing employee and returns an Observable of Users1
+      return this.https.post<Users1>(this.url + 'Administration/UpdateEmployees', employees);
+    }
 }

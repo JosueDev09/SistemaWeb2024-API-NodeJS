@@ -1,32 +1,35 @@
 import { getConnection } from "../database/connection.js";
 
-
+// Function to list employees
 export const listEmployes = async (req, res) => {
-      //Con estas lineas de codigo estoy mandando a llamar un store procedure 
-    //El pool hace la conexion a la base de datos
     try {
+        // Get a database connection
         const conn = await getConnection();
-        const result = await conn.execute('CALL thewebsystem2024.sp_tbusers_list') //Asi es como se manda a llamar una store procedure en mysql
+        // Execute the stored procedure to retrieve employees
+        const result = await conn.execute('CALL thewebsystem2024.sp_tbusers_list');
+        // Send the result back as a JSON response
         res.json(result[0]);
-        }
-        catch(error){
-            console.error('Error to execute stored procedure:', error);
-            res.status(500).json({ message: 'Error to get employees'});
-        }
-
+    } catch (error) {
+        // Log any errors that occur during execution
+        console.error('Error to execute stored procedure:', error);
+        // Send a 500 error response with a message
+        res.status(500).json({ message: 'Error to get employees' });
+    }
 }
 
+// Function to list roles
 export const listRol = async (req, res) => {
-    //Con estas lineas de codigo estoy mandando a llamar un store procedure 
-  //El pool hace la conexion a la base de datos
-  try {
-      const conn = await getConnection();
-      const result = await conn.query('SELECT * FROM tbrol') //Asi es como se manda a llamar una store procedure en mysql
-      res.json(result[0]);
-      }
-      catch(error){
-          console.error('Error to execute query:', error);
-          res.status(500).json({ message: 'Error to get roles'});
-      }
-
+    try {
+        // Get a database connection
+        const conn = await getConnection();
+        // Execute the query to retrieve roles
+        const result = await conn.query('SELECT * FROM tbrol');
+        // Send the result back as a JSON response
+        res.json(result[0]);
+    } catch (error) {
+        // Log any errors that occur during execution
+        console.error('Error to execute query:', error);
+        // Send a 500 error response with a message
+        res.status(500).json({ message: 'Error to get roles' });
+    }
 }

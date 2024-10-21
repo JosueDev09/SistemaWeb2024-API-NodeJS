@@ -15,35 +15,51 @@ import { TableModule } from 'primeng/table';
 })
 export class CrudComponent implements OnInit {
    
-//Is initialized when get user from database
-     users:Users[]=[];
-     user: Users = {};
-    
+// Array to hold the list of users
+users: Users[] = [];
 
-    users1:Users1[]=[];
-    user1: Users1 = {};
+// Object to represent a single user
+user: Users = {};
+
+// Array to hold the list of user roles or additional user information
+users1: Users1[] = [];
+
+// Object to represent a single user role or additional information
+user1: Users1 = {};
+
+// Variable to hold a string representation of an employee (may be used for searching or filtering)
+strEmpleado: any;
+
+// Array to hold positions or roles associated with employees
+listPuestoR: any[] = [];
+
+// Flag to control the visibility of the employee update dialog
+employeeUpdateDialog: boolean = false;
+
+// Flag to control the visibility of the employee list dialog
+employeesDialog: boolean = false;
+
+// Flag to control the visibility of the product deletion confirmation dialog
+deleteProductDialog: boolean = false;
+
+// Flag to control the visibility of the bulk product deletion confirmation dialog
+deleteProductsDialog: boolean = false;
+
+// Array to hold selected products for operations like deletion
+selectedProducts: Product[] = [];
+
+// Flag to indicate if a form has been submitted
+submitted: boolean = false;
+
+// Array to define the columns of a table or grid
+cols: any[] = [];
+
+// Array to hold different status options (e.g., active, inactive)
+statuses: any[] = [];
+
+// Options for the number of rows to display per page in a paginated view
+rowsPerPageOptions = [5, 10, 20];
    
-
-    strEmpleado:any;
-    listPuestoR: any[] = [];
-
-    employeeUpdateDialog: boolean = false;
-
-    employeesDialog: boolean = false;
-
-    deleteProductDialog: boolean = false;
-
-    deleteProductsDialog: boolean = false;
-
-    selectedProducts: Product[] = [];
-
-    submitted: boolean = false;
-
-    cols: any[] = [];
-
-    statuses: any[] = [];
-
-    rowsPerPageOptions = [5, 10, 20];
 
     constructor(private productService: ProductService, private messageService: MessageService,private usersService: UsersService) { }
 
