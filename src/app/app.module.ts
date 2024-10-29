@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
 
 import { ProductService } from './demo/service/product.service';
-import { PhotoService } from './demo/service/photo.service';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 
@@ -15,7 +15,6 @@ import { TableModule } from 'primeng/table';
     providers: [
         { provide: LocationStrategy, 
             useClass: PathLocationStrategy },
-              PhotoService,
          ProductService,
          ReactiveFormsModule
     ],
