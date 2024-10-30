@@ -44,7 +44,7 @@ export const loginSession = async (req, res) => {
        
           if (strUser === user.strUser && strPassword === user.strPassword) {
             const token = jwt.sign({ strUser,strPassword, intRol: user.intRol }, secretKey, { expiresIn: "1m" });
-            return res.status(200).json({success:true, message: "Generated Successfully", token, rol: user.intRol });
+            return res.status(200).json({success:true, message: "Generated Successfully", strUser: user.strUser, token, rol: user.intRol }); 
         }
        
           return res.status(401).json({ success: false, message: "Failed Authentication" });

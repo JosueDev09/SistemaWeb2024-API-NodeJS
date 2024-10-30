@@ -16,10 +16,12 @@ import { TableModule } from 'primeng/table';
 export class CrudComponent implements OnInit {
    
 // Array to hold the list of users
+
 users: Users[] = [];
 
 // Object to represent a single user
-user: Users = {};
+//user: Users = {};
+user: Users[] = [];
 
 // Array to hold the list of user roles or additional user information
 users1: Users1[] = [];
@@ -81,20 +83,27 @@ rowsPerPageOptions = [5, 10, 20];
 
     fnlistEmployees () {
         this.usersService.listEmployees().subscribe(
-          (res:any) => {
-            this.user= res[0];
-          //  console.log(res);
+           (res:any) => {
+          //   this.user= res[0];
+          // //  console.log(res);
       
-          }, error => {
-            console.log(error);
-          }
-          
+          // }, error => {
+          //   console.log(error);
+          // }
+          if (Array.isArray(res)) {
+            this.user = res[0]; // Asegúrate de que response sea un array
+        } else {
+            console.error('Respuesta no válida:', res);
+            this.user = []; // Maneja el error adecuadamente
+        }
+      } 
         );
       }
       
       fnListRol(){
         this.usersService.listRol().subscribe(
           res => {
+            
             this.listPuestoR=res;
             console.log(res);
           }, error => {
@@ -120,12 +129,12 @@ rowsPerPageOptions = [5, 10, 20];
            }
          
            fnClear(){
-             this.user.FullName='';
-             this.user.strNombre='';
-             this.user.phone='';
-             this.user.email='';
-             this.user.strRolName='';
-             this.user.intRolId=0;
+             this.user1.FullName='';
+             this.user1.strNombre='';
+             this.user1.phone='';
+             this.user1.email='';
+           //  this.user1.strRolName='';
+             this.user1.intRolId=0;
            }
          
            fnUpdateEmployee(select:any)

@@ -10,15 +10,18 @@ import { Router } from '@angular/router';
 })
 export class AppTopBarComponent {
     items!: MenuItem[];
-    
+    userName: string;
     @ViewChild('menubutton') menuButton!: ElementRef;
     @ViewChild('topbarmenubutton') topbarMenuButton!: ElementRef;
     @ViewChild('topbarmenu') menu!: ElementRef;
 
-    constructor(public layoutService: LayoutService, private auth: AuthService, private router: Router) { }
+    constructor(public layoutService: LayoutService, private auth: AuthService, private router: Router) {
+        this.userName = this.auth.getUserName();
+     }
 
     fnLogout() {
         this.auth.logout(); // Llama al método de cerrar sesión en tu AuthService
+        this.userName = '';
         this.router.navigate(['/']); // Redirige a la página de inicio de sesión
     }
 }

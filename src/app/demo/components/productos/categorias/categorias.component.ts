@@ -31,20 +31,22 @@ export class CategoriasComponent implements OnInit {
 
     products: Product[] = [];
 
-    product: Product = {};
+    product: Product[] = [];
 
     categorias: Categorias[] = [];
 
-    categoria: Categorias = {};
+   // categoria: Categorias = {};
+
+    categoria: Categorias[] = [];
 
     categorias1: Categorias1[] = [];
 
-    categoria1: Categorias1 = {};
+    categoria1: Categorias1 = {}; 
 
     subcategorias: SubCategorias[] = [];
 
-    subcategoria: SubCategorias = {};
-
+    subcategoria: SubCategorias[] = [];
+    
     subcategorias1: SubCategorias1[] = [];
 
     subcategoria1: SubCategorias1 = {};
@@ -66,13 +68,19 @@ export class CategoriasComponent implements OnInit {
     fnlistCategorias () {
         this.categoriasService.listCategorias().subscribe(
           res => {
-           this.categoria= res;
-            console.log(res);
+          //  this.categoria= res;
+          //   console.log(res);
       
-          }, error => {
-            console.log(error);
-          }
-          
+          // }, error => {
+          //   console.log(error);
+          // }
+          if (Array.isArray(res)) {
+            this.categoria = res[0]; // Asegúrate de que response sea un array
+        } else {
+            console.error('Respuesta no válida:', res);
+            this.categoria = []; // Maneja el error adecuadamente
+        }
+        }
         );
       }
 
@@ -127,8 +135,14 @@ export class CategoriasComponent implements OnInit {
         fnListCategoriasSub(){
           this.categoriasService.listCategoriasSub().subscribe(
               res => {
-               this.listCategoriasSub= res;
-                console.log(res);
+              //  this.listCategoriasSub= res;
+              //   console.log(res);
+                if (Array.isArray(res)) {
+                  this.listCategoriasSub = res[0]; // Asegúrate de que response sea un array
+                } else {
+                  console.error('Respuesta no válida:', res);
+                  this.listCategoriasSub = []; // Maneja el error adecuadamente
+               }
           
               }, error => {
                 console.log(error);
@@ -140,8 +154,14 @@ export class CategoriasComponent implements OnInit {
         fnlistSubCategorias () {
           this.categoriasService.listSubCategorias().subscribe(
             res => {
-             this.subcategoria= res;
-              console.log(res);
+           //  this.subcategoria= res;
+            //  console.log(res);
+              if (Array.isArray(res)) {
+                this.subcategoria = res[0]; // Asegúrate de que response sea un array
+              } else {
+                console.error('Respuesta no válida:', res);
+                this.subcategoria = []; // Maneja el error adecuadamente
+             }
         
             }, error => {
               console.log(error);
@@ -187,17 +207,17 @@ export class CategoriasComponent implements OnInit {
     this.subCategoriaAddModal = true;
     }
 
-    deleteProduct(product: Product) {
-        this.deleteProductDialog = true;
-        this.product = { ...product };
-    }
+    // deleteProduct(product: Product) {
+    //     this.deleteProductDialog = true;
+    //     this.product = { ...product };
+    // }
 
-    confirmDelete() {
-        this.deleteProductDialog = false;
-        this.products = this.products.filter(val => val.id !== this.product.id);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-        this.product = {};
-    }
+    // confirmDelete() {
+    //     this.deleteProductDialog = false;
+    //     this.products = this.products.filter(val => val.id !== this.product.id);
+    //     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+    //     this.product = {};
+    // }
 
     hideDialog() {
         this.categoriaModal = false;

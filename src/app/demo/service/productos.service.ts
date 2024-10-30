@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Productos1 } from '../models/productosModels';
+import { Productos, Productos1 } from '../models/productosModels';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,14 @@ export class ProductosService {
   private url: string = environment.apiUrl;
   constructor(private https:HttpClient) { }
 
-  listProductos() {
-    return this.https.get(this.url + 'Inventario/Productos');
+  // listProducts() {
+  //   return this.https.get(this.url + 'Inventario/Productos');
+  // }
+
+   // Method to retrieve a list of employees
+   listProducts(): Observable<Productos[]> {
+    // Sends a GET request to the specified URL and returns an Observable of Users array
+    return this.https.get<Productos[]>(this.url + 'Inventory/ProductsList');
   }
 
   listProductosCategorias():Observable<any[]> {

@@ -12,29 +12,31 @@ import { ProductosService } from 'src/app/demo/service/productos.service';
 })
 export class ProductosComponent implements OnInit {
 
-    listColoresProductos: any[] = [];
+    listColorsProducts: any[] = [];
 
-    listTallasProductos: any[] = [];
+    listSizeProducts: any[] = [];
    
     productosUpdateDialog: boolean = false;
 
-    productosAdd: boolean = false;
+    productosAddDialog: boolean = false;
 
     deleteProductDialog: boolean = false;
 
     deleteProductsDialog: boolean = false;
 
-    products: Product[] = [];
+   // products: Product[] = [];
 
-    product: Product = {};
+    //product: Product = {};
 
-    productos: Productos[]= [];
+    product: Product[] = [];
 
-    producto: Productos = {};
+    products: Productos[]= [];
+    
+   // producto: Productos = {};
 
-    productos1: Productos1[]= [];
+    products1: Productos1[]= [];
 
-    producto1: Productos1 = {};
+    product1: Productos1 = {};
 
     listProductosCategorias: any[] = [];
 
@@ -51,22 +53,22 @@ export class ProductosComponent implements OnInit {
     constructor(private productoService: ProductosService, private messageService: MessageService) { }
 
     ngOnInit() {
-       this.fnListProductos();
+       this.fnListProducts();
        this.fnListProductosCategorias();
        this.fnListColoresProductos();
        this. fnListTallasProductos();
     }
 
-    fnListProductos(){
-        this.productoService.listProductos().subscribe(
-            res => {
-             this.producto= res;
-              console.log(res);
-        
-            }, error => {
-              console.log(error);
-            }
-            
+    fnListProducts(){
+        this.productoService.listProducts().subscribe(
+          (res:any) => {         
+            if (Array.isArray(res)) {
+              this.product = res[0]; // Asegúrate de que response sea un array
+          } else {
+              console.error('Respuesta no válida:', res);
+              this.product = []; // Maneja el error adecuadamente
+          }
+        }
           );
     }
     fnListProductosCategorias(){
@@ -85,7 +87,7 @@ export class ProductosComponent implements OnInit {
           fnListColoresProductos(){
             this.productoService.listColoresProductos().subscribe(
                 res => {
-                 this.listColoresProductos= res;
+                 this.listColorsProducts= res;
                   console.log(res);
             
                 }, error => {
@@ -98,7 +100,7 @@ export class ProductosComponent implements OnInit {
               fnListTallasProductos(){
                 this.productoService.listTallasProductos().subscribe(
                     res => {
-                     this.listTallasProductos= res;
+                     this.listSizeProducts= res;
                       console.log(res);
                 
                     }, error => {
@@ -113,10 +115,10 @@ export class ProductosComponent implements OnInit {
              this.productoService.addProductos(productos).subscribe(
                res=>{
                if(res){
-                this.messageService.add({ severity: 'success', summary: 'Correctamente', detail: 'Producto Creado', life: 3000 });
+                this.messageService.add({ severity: 'success', summary: 'Succsesfully', detail: 'Created Product', life: 3000 });
                  console.log(res);
                  this.fnClear();
-                 this.fnListProductos();
+                 this.fnListProducts();
                }
                else{
                  alert("Error")
@@ -125,23 +127,24 @@ export class ProductosComponent implements OnInit {
            }
          
            fnClear(){
-             this.producto.strNombreProducto='';
-             this.producto.strDescripcionProducto='';
-             this.producto.strCategoria='';
-             this.producto.intCantidad=0;
+             this.product1.strNameProduct='';
+             this.product1.strDescriptionProduct='';
+             //this.producto1.strCategoria='';
+             this.product1.intQuantity=0;
+             this.product1.dblPrice=0;
            
            }
          
-           fnUpdateProducto(select:any)
+           fnUpdateProduct(select:any)
            {
-            this.producto1.intProducto = select.intProducto;
-            this.producto1.strNombreProducto = select.strNombreProducto;
-            this.producto1.strDescripcionProducto = select.strDescripcionProducto;
-            this.producto1.intCategoria = select.intCategoria;        
-            this.producto1.dblPrecio = select.dblPrecio;        
-            this.producto1.intCantidad = select.intCantidad;  
-            this.producto1.intColor = select.intColor;  
-            this.producto1.intTalla = select.intTalla;                
+            this.product1.intProduct = select.intProduct;
+            this.product1.strNameProduct = select.strNameProduct;
+            this.product1.strDescriptionProduct = select.strDescriptionProduct;
+            this.product1.intQuantity = select.intQuantity;        
+            this.product1.dblPrice = select.dblPrice;        
+            this.product1.intQuantity = select.intCantidad;  
+            this.product1.intColor = select.intColor;  
+            this.product1.intSize = select.intSize;                
             this.productosUpdateDialog = true;
            
            }
@@ -152,10 +155,10 @@ export class ProductosComponent implements OnInit {
                 res=>{
                 
                 if(res){
-                  this.messageService.add({ severity: 'success', summary: 'Correctamente', detail: 'Producto Actualizado', life: 3000 });
+                  this.messageService.add({ severity: 'success', summary: 'Succsesfully', detail: 'Updated Product', life: 3000 });
                   console.log(res);
                   
-                  this.fnListProductos();
+                  this.fnListProducts();
                 }
                 else{
                   alert("Error")
@@ -165,46 +168,54 @@ export class ProductosComponent implements OnInit {
 
     
 
-    openNew() {
-        this.product = {};
-        this.submitted = false;
-        this.productosAdd = true;
+    // openNew() {
+    //     this.product = {};
+    //     this.submitted = false;
+    //     this.productosAdd = true;
+    // }
+
+    fnOpenAddProductModal()
+    {
+      this.productosAddDialog = true;
+      this.fnClear();
     }
 
     deleteSelectedProducts() {
         this.deleteProductsDialog = true;
     }
 
-    deleteProduct(product: Product) {
-        this.deleteProductDialog = true;
-        this.product = { ...product };
-    }
+    // deleteProduct(product: Product) {
+    //     this.deleteProductDialog = true;
+    //     this.product = { ...product };
+    // }
 
-    confirmDelete() {
-        this.deleteProductDialog = false;
-        this.products = this.products.filter(val => val.id !== this.product.id);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Producto Deleted', life: 3000 });
-        this.product = {};
-    }
+    // confirmDelete() {
+    //     this.deleteProductDialog = false;
+    //     this.products = this.products.filter(val => val.id !== this.product.id);
+    //     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Producto Deleted', life: 3000 });
+    //     this.product = {};
+    // }
 
     hideDialog() {
         this.productosUpdateDialog = false;
+        this.productosAddDialog = false;
         this.submitted = false;
+        this.fnClear();
     }
 
     
 
-    findIndexById(id: string): number {
-        let index = -1;
-        for (let i = 0; i < this.products.length; i++) {
-            if (this.products[i].id === id) {
-                index = i;
-                break;
-            }
-        }
+    // findIndexById(id: string): number {
+    //     let index = -1;
+    //     for (let i = 0; i < this.products.length; i++) {
+    //         if (this.products[i].id === id) {
+    //             index = i;
+    //             break;
+    //         }
+    //     }
 
-        return index;
-    }
+    //     return index;
+    // }
 
     
 

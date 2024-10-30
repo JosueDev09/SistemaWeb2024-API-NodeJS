@@ -1,30 +1,30 @@
 export class Productos1{
-    intProducto?: number = 0;
+    intProduct?: number = 0;
     //strCodigoProducto?: string = ''; 
-    strNombreProducto?:string = '';  
-    strDescripcionProducto?:string = '';  
-    dblPrecio?:number = 0;  
-    intCantidad?:number = 0;  
-    intCategoria?:number = 0;  
+    strNameProduct?:string = '';  
+    strDescriptionProduct?:string = '';  
+    dblPrice?:number = 0;  
+    intQuantity?:number = 0;  
+    intCategorie?:number = 0;  
     intColor?:number = 0;
-    intTalla?:number = 0;
-    // strEstatus?:string = '';  
-    // Estatus?:string = '';  
+    intSize?:number = 0;
+    // strStatus?:string = '';  
+    // Status?:string = '';  
 }
 export interface Productos{
-    intProducto?: number;
+    intProduct?: number;
     //strCodigoProducto?: string; 
-    strNombreProducto?:string;  
-    strDescripcionProducto?:string;  
-    dblPrecio?:number;  
-    intCantidad?:number; 
-    strCategoria?:string; 
-    intCategoria?:number; 
-    strNombreCategoria?:string;   
-    // strEstatus?:string;  
-     Estatus?:string;
+    strNameProduct?:string;  
+    strDescriptionProduct?:string;  
+    dblPrice?:number;  
+    intQuantity?:number; 
+    strCategorie?:string; 
+    intCategorie?:number; 
+    strNameCategorie?:string;   
+    // strStatus?:string;  
+     Status?:string;
      intColor?: number;
      strColor?: string;  
-     intTalla?:number;
-     strTalla?:string;
+     intSize?:number;
+     strSize?:string;
 }
