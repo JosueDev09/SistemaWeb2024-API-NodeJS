@@ -23,8 +23,6 @@ export const loginSession = async (req, res) => {
         strPassword, 
          } = req.body;
 
-        console.log("Primer",req.body)
-
       // Verificar que los parámetros no estén vacíos
       if (!strUser || !strPassword) {
           return res.status(400).json({ message: "Faltan parámetros" });
@@ -37,17 +35,21 @@ export const loginSession = async (req, res) => {
      const [results] = await connection.execute('CALL sp_authLoginUsuario(?, ?)', [strUser,strPassword]);
 
       const user = results[0][0]; // Asegúrate de acceder correctamente al primer resultado
-    // console.log(user);
+     //console.log(user);
       // Verificar si se encontró un usuario
+   
       
-          // Comparar los datos de autenticación
-       
-          if (strUser === user.strUser && strPassword === user.strPassword) {
-            const token = jwt.sign({ strUser,strPassword, intRol: user.intRol }, secretKey, { expiresIn: "1m" });
-            return res.status(200).json({success:true, message: "Generated Successfully", strUser: user.strUser, token, rol: user.intRol }); 
-        }
-       
-          return res.status(401).json({ success: false, message: "Failed Authentication" });
+      if (!user) {
+        return res.status(401).json({ success: false, message: "Failed Authentication" });
+      }
+      // Verificar si la contraseña es correcta
+      if (user.strPassword !== strPassword) {
+        return res.status(401).json({ success: false, message: "Failed Authentication" });
+      }
+    
+          // return res.status(401).json({ success: false, message: "Failed Authentication" });
+          const token = jwt.sign({ strUser, intRol: user.intRol }, secretKey, { expiresIn: "10m" });
+          return res.status(200).json({success:true, message: "Generated Successfully", strUser: user.strUser, token, rol: user.intRol }); 
         
 
   } catch (error) {

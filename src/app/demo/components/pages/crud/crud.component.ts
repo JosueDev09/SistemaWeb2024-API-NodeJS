@@ -8,6 +8,7 @@ import { UsersService } from 'src/app/demo/service/users.service';
 import Swal from 'sweetalert2'
 import { asRoughMinutes } from '@fullcalendar/core/internal';
 import { TableModule } from 'primeng/table';
+import { NgIf } from '@angular/common'; 
 
 @Component({
     templateUrl: './crud.component.html',
@@ -129,20 +130,20 @@ rowsPerPageOptions = [5, 10, 20];
            }
          
            fnClear(){
-             this.user1.FullName='';
-             this.user1.strNombre='';
-             this.user1.phone='';
-             this.user1.email='';
+             this.user1.strFullName='';
+             this.user1.strPhone='';
+             this.user1.strEmail='';
            //  this.user1.strRolName='';
              this.user1.intRolId=0;
            }
          
            fnUpdateEmployee(select:any)
            {
-            this.user1.intUser = select.intUser;
-            this.user1.FullName = select.FullName;
-            this.user1.phone = select.phone;
-            this.user1.email = select.email;    
+            // this.user1.intUser = select.intUser;
+            this.user1.strUsername = select.strUsername;
+            this.user1.strFullName = select.strFullName;
+            this.user1.strPhone = select.strPhone;
+            this.user1.strEmail = select.strEmail;    
             this.user1.intRolId = select.intRolId;
             // this.user1.strRolName = select.strRolName;
             this.user1.intEstatus = select.intEstatus;    
