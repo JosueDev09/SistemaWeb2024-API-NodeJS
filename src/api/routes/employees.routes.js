@@ -1,5 +1,5 @@
 import {Router} from "express";
-import { listEmployes, listRol } from '../controllers/user.controller.js';
+import { listEmployes, listRol, saveEmployees,updateEmployees } from '../controllers/user.controller.js';
 
 
 const router = Router();
@@ -9,9 +9,9 @@ const router = Router();
 
  router.get("/Administration/EmployeesList", listEmployes);
 
- router.post("/Administration/SaveEmployees");
+ router.post("/Administration/SaveEmployees",saveEmployees);
 
- router.post("/Administration/UpdateEmployees");
+ router.post("/Administration/UpdateEmployees",updateEmployees);
 // router.get("/dashboard", verifyToken,verifyTokenAccess) //Esta ruta lo que haces es redirigir las pantallas del admijn y validar si hay un auth 
 
 

@@ -29,8 +29,19 @@ export class AppMenuComponent implements OnInit {
                   
                     {
                         label: 'Employees',
-                        icon: 'pi pi-fw pi-users',
+                        icon: 'pi pi-fw pi-user',
                         routerLink: ['/administration/Employees']
+                    },
+
+                    {
+                        label: 'Clients',
+                        icon: 'pi pi-fw pi-users',
+                        routerLink: ['/administration/Clients']
+                    },
+                    {
+                        label: 'Orders',
+                        icon: 'pi pi-fw pi-shopping-cart',
+                        routerLink: ['/administration/Orders']
                     },
                     
                     {
