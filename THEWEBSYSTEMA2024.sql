@@ -210,4 +210,55 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_SaveEmployees`(
+	IN p_strFullName VARCHAR(50),
+	IN p_strUser VARCHAR(255),
+	IN p_strPassword VARCHAR(50),
+    IN p_strPhoneNumber VARCHAR(255),
+	IN p_strEmail VARCHAR(50),
+    IN p_intRolId VARCHAR(255),
+	IN p_intStatus int
+	
+)
+BEGIN
+	
+    
+    -- Verificar si el usuario existe
+    IF NOT EXISTS(SELECT 1 FROM tbusers WHERE strUser = p_strUser AND strEmail = p_strEmail)
+    THEN
+		INSERT INTO tbUsers(strFullName, strUser,strPassword,strPhoneNumber, strEmail, intRolId, intEstatus, datDate)
+        VALUES(p_strFullName, p_strUser, p_strPassword,p_strPhoneNumber,p_strEmail,p_intRolId, p_intStatus,now());
+    ELSE
+		SELECT 'ALREADY EXISTS EMPLOYEE';
+    END IF;
+    
+END
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_tbUpdateEmployee`(
+    IN p_strFullName VARCHAR(50),
+	IN p_strUser VARCHAR(250),
+    IN p_strPhoneNumber VARCHAR(250),
+	IN p_strEmail VARCHAR(250),
+    IN p_intRolId VARCHAR(25),
+	IN p_intStatus int
+)
+BEGIN
+
+-- Primero, asigsnamos el valor de intUserId a la variable usando SET
+    SET @p_intUserId = (SELECT intUserId FROM tbusers WHERE strUser = p_strUser AND strEmail = p_strEmail LIMIT 1);
+    
+
+
+
+  UPDATE tbUsers
+  SET strFullName = p_strFullName , 
+  strUser = p_strUser ,s
+  strPhoneNumber = p_strPhoneNumber,
+  strEmail = p_strEmail, 
+  intRolId = p_intRolId, 
+  intEstatus = p_intStatus, 
+  datDate = NOW()
+  WHERE intUserId = @p_intUserId;
+END
 -- Dump completed on 2024-10-30 17:13:17
