@@ -210,9 +210,6 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-<<<<<<< HEAD:src/api/database/DBSYSTEMAWEB.sql
--- Dump completed on 2025-01-27 12:13:29
-=======
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_SaveEmployees`(
 	IN p_strFullName VARCHAR(50),
 	IN p_strUser VARCHAR(255),
@@ -265,4 +262,3 @@ BEGIN
   WHERE intUserId = @p_intUserId;
 END
 -- Dump completed on 2024-10-30 17:13:17
->>>>>>> 5783e04b266d2e51bbc656eccea73307112f8f0b:THEWEBSYSTEMA2024.sql
