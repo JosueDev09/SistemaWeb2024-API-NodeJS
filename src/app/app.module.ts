@@ -16,7 +16,8 @@ import { TableModule } from 'primeng/table';
         { provide: LocationStrategy, 
             useClass: PathLocationStrategy },
          ProductService,
-         ReactiveFormsModule
+         ReactiveFormsModule,
+         
     ],
     bootstrap: [AppComponent],
 })

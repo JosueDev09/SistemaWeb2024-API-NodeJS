@@ -8,6 +8,8 @@ import { UsersService } from 'src/app/demo/service/users.service';
 import Swal from 'sweetalert2'
 import { asRoughMinutes } from '@fullcalendar/core/internal';
 import { TableModule } from 'primeng/table';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 @Component({
     templateUrl: './clients.component.html',
@@ -29,7 +31,7 @@ strClient: any;
 
 
 // Flag to control the visibility of the employee update dialog
-employeeUpdateDialog: boolean = false;
+clientViewDialog: boolean = false;
 
 
 
@@ -68,6 +70,10 @@ rowsPerPageOptions = [5, 10, 20];
 
     }
 
+    fnViewClient(client: Clients) {
+    
+    }
+
     fnlistClients () {
         this.clientsService.listClients().subscribe(
            (res:any) => {
@@ -87,8 +93,14 @@ rowsPerPageOptions = [5, 10, 20];
         );
       }
 
+      openNew() {
+      
+        this.submitted = false;
+        this.clientViewDialog = true;
+    }
+
     hideemployeeUpdateDialog() {
-        this.employeeUpdateDialog = false;
+        this.clientViewDialog = false;
         this.submitted = false;
     }
 
