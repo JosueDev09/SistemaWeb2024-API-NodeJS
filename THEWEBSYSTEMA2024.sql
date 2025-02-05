@@ -262,3 +262,38 @@ BEGIN
   WHERE intUserId = @p_intUserId;
 END
 -- Dump completed on 2024-10-30 17:13:17
+
+
+DELIMITER ;;
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `sp_tbClients_list` (
+)
+BEGIN
+	SELECT 
+    r.intClients,
+    r.strFulltName,
+    r.strPhone,
+    r.strEmail,
+    r.strRolName,
+    r.datDateUp
+    FROM tbClients C
+    INNER JOIN tbRol r ON r.intRolId = C.intRol;
+
+END ;;
+
+DELIMITER ;;
+
+CREATE TABLE `tbClients` (
+  `intClient` int NOT NULL AUTO_INCREMENT,
+  `strFullName` varchar(250) DEFAULT NULL,
+  `strPhone` varchar(50) DEFAULT NULL,
+  `strEmail` varchar(50) DEFAULT NULL,
+  `datDateUp` datetime DEFAULT NULL,
+  `intRol` int DEFAULT NULL,
+  `intCity` int DEFAULT NULL,
+  `intState` int DEFAULT NULL,
+  `strAdress` varchar(250) DEFAULT NULL,
+  `intCP` int DEFAULT NULL,
+  `strReferences` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`intClient`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf32
+
