@@ -3,7 +3,7 @@ import { Product } from 'src/app/demo/models/product';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { ClientsService } from 'src/app/demo/service/clients.service';
-import { Clients } from 'src/app/demo/models/clientsModels';
+import { Clients, Clients1 } from 'src/app/demo/models/clientsModels';
 import { UsersService } from 'src/app/demo/service/users.service';
 import Swal from 'sweetalert2'
 import { asRoughMinutes } from '@fullcalendar/core/internal';
@@ -24,6 +24,9 @@ clients: Clients[] = [];
 // Object to represent a single user
 //user: Users = {};
 client: Clients[] = [];
+
+clients1: Clients1[] = [];
+client1: Clients1 = {};
 
 
 // Variable to hold a string representation of an employee (may be used for searching or filtering)
@@ -57,21 +60,8 @@ rowsPerPageOptions = [5, 10, 20];
     ngOnInit() {
         //  this.usersService.listEmpleados1().then(data => this.users = data);
           this.fnlistClients(); 
-        
-        // this.cols = [
-        //     { field: 'strEmpleado', header: 'Empleado' },
-        //     { field: 'strNombre', header: 'Nombre' },
-        //     { field: 'strPuesto', header: 'Puesto' },
-        //     { field: 'strTelefono', header: 'Telefono' },
-        //     { field: 'strEmail', header: 'Correo' }
-            
-        // ];
 
-
-    }
-
-    fnViewClient(client: Clients) {
-    
+         
     }
 
     fnlistClients () {
@@ -93,11 +83,26 @@ rowsPerPageOptions = [5, 10, 20];
         );
       }
 
-      openNew() {
-      
-        this.submitted = false;
+      fnViewClient(select: any) {
+        this.client1.strFullName = select.strFullName;  
+        this.client1.strLastName = select.strLastName;  
+        this.client1.strPhone = select.strPhone;
+        this.client1.strEmail = select.strEmail;
+        this.client1.strAdress = select.strAdress;
+        this.client1.strReferences = select.strReferences;
+        this.client1.strPaymentMethod = select.strPaymentMethod;
+        this.client1.intCP = select.intCP;
+       // this.client1.s = select.intCity;
+        this.client1.strCityName = select.strCityName;
+        this.client1.datDate = select.datDate;
         this.clientViewDialog = true;
     }
+
+    //   openViewClient() {
+      
+    //     this.submitted = false;
+    //     this.clientViewDialog = true;
+    // }
 
     hideemployeeUpdateDialog() {
         this.clientViewDialog = false;

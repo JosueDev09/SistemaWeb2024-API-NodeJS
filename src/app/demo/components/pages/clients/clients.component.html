@@ -9,7 +9,7 @@
 
                 <ng-template pTemplate="right">
                  <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
-                 <button pButton pRipple label="Client Modal" icon="pi pi-users" class="p-button-help" (click)="openNew()"></button>
+                
                 </ng-template>
             </p-toolbar>
             <!-- AQUI SE DELARA LO QUE VIENE DE LA LISTA DE MI FUNCION DE TS <p-table #dt [value]="user"  -->
@@ -21,7 +21,7 @@
             [paginator]="true" 
             [rowsPerPageOptions]="[10,20,30]" 
             [showCurrentPageReport]="true" 
-            currentPageReportTemplate="Show {first} to {last} of {totalRecords} employees" 
+            currentPageReportTemplate="Show {first} to {last} of {totalRecords} Clients" 
             
             [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
@@ -46,10 +46,11 @@
                         <th pSortableColumn="email">Email </th>
                         <th pSortableColumn="strCity">City</th>
                         <th pSortableColumn="date">Date</th>
+                        <th pSortableColumn="actions">Actions</th>
                         <th></th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-user  >
+                <ng-template pTemplate="body" let-client  >
                     <tr >
                         <td>
                             <!-- <p-tableCheckbox [value]="user"></p-tableCheckbox> -->
@@ -64,19 +65,19 @@
                      
                         <td style="width:14%; min-width:8rem;">
                             <span class="p-column-title">Phone</span>
-                            {{client.phone}}
+                            {{client.strPhone}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Email</span>
-                            {{client.email}}
+                            {{client.strEmail}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Email</span>
-                            {{client.email}}
+                            <span class="p-column-title">City</span>
+                            {{client.strCityName}}
                         </td>
                         <td style="width:14%; min-width:10rem;">
-                            <span class="p-column-title">Email</span>
-                            {{client.email}}
+                            <span class="p-column-title">Date</span>
+                            {{client.datDateUp}}
                         </td>
                       
                        
@@ -85,7 +86,7 @@
                         </td> -->
                         <td>
                             <div class="flex">
-                                <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-success mr-2" (click)="fnViewClients(client)"></button>
+                                <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-success mr-2" (click)="fnViewClient(client)"></button>
                                 <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button> -->
                             </div>
                         </td>
@@ -107,52 +108,52 @@
                 <div class="flex space-x-4">
                     <div class="field w-full mr-7">
                         <label for="nombre">Name</label>
-                        <input type="text" pInputText id="strName" [(ngModel)]="user1.strFullName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.strFullName}"/>
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strFullName">Full Name is required.</small>
+                        <input type="text" disabled pInputText id="strName" [(ngModel)]="client1.strFullName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.strFullName}"/>
+                        
                     </div>
                     <div class="field w-full">
                         <label for="correo">Last Name</label>
-                        <input type="text" pInputText id="strEmail" [(ngModel)]="user1.strEmail" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.strEmail}"/>
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strEmail">Email is required.</small>
+                        <input type="text"  disabled pInputText id="strlastName" [(ngModel)]="client1.strLastName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.strLastName}"/>
+                     
                     </div>
                 </div>
 
                 <div class="flex space-x-4">
                     <div class="field w-full mr-7">
                         <label for="nombre">Phone</label>
-                        <input type="text" pInputText id="strName" [(ngModel)]="user1.strFullName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.strFullName}"/>
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strFullName">Full Name is required.</small>
+                        <input type="text" disabled pInputText id="strName" [(ngModel)]="client1.strPhone" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.strPhone}"/>
+      
                     </div>
                     <div class="field w-full">
                         <label for="correo">Email</label>
-                        <input type="text" pInputText id="strEmail" [(ngModel)]="user1.strEmail" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.strEmail}"/>
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strEmail">Email is required.</small>
+                        <input type="text" disabled pInputText id="strEmail" [(ngModel)]="client1.strEmail" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.strCityName}"/>
+            
                     </div>
                 </div>
 
                 <div class="flex space-x-4">
                     <div class="field w-full mr-7">
                         <label for="correo">City</label>
-                        <input type="text" pInputText id="strEmail" [(ngModel)]="user1.strEmail" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.strEmail}"/>
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strEmail">Email is required.</small>
+                        <input type="text"  disabled pInputText id="strEmail" [(ngModel)]="client1.strCityName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strCityName}"/>
+          
                     </div>
                     <div class="field w-full mr-7">
                         <label for="nombre">Zip</label>
-                        <input type="text" pInputText id="strName" [(ngModel)]="user1.strFullName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.strFullName}"/>
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strFullName">Full Name is required.</small>
+                        <input type="text"  disabled pInputText id="intCP" [(ngModel)]="client1.intCP" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strFullName}"/>
+                
                     </div>
                     <div class="field w-full">
                         <label for="correo">Method payment</label>
-                        <input type="text" pInputText id="strEmail" [(ngModel)]="user1.strEmail" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.strEmail}"/>
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strEmail">Email is required.</small>
+                        <input type="text" disabled pInputText id="strPaymentMethod" [(ngModel)]="client1.strPaymentMethod" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strPaymentMethod}"/>
+                
                     </div>
                 </div>
 
                 <div class="flex space-x-4">
                     <div class="field w-full mr-7">
                         <label for="nombre">Address</label>
-                        <input type="text" pInputText id="strName" [(ngModel)]="user1.strFullName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.strFullName}"/>
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strFullName">Full Name is required.</small>
+                        <input type="text" disabled pInputText id="strName" [(ngModel)]="client1.strAdress" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strAdress}"/>
+                 
                     </div>
                    
                 </div>
@@ -162,8 +163,8 @@
                 <div class="flex space-x-4">
                     <div class="field w-full mr-7">
                         <label for="nombre">References</label>
-                        <input type="text" pInputText id="strName" [(ngModel)]="user1.strFullName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.strFullName}"/>
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !user1.strFullName">Full Name is required.</small>
+                        <input type="text" disabled pInputText id="strName" [(ngModel)]="client1.strReferences" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strReferences}"/>
+                 
                     </div>
                     
                 </div>
@@ -178,8 +179,8 @@
             </ng-template>
 
             <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" ></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" ></button>
+                <button pButton pRipple label="Close" icon="pi pi-times" class="p-button-text" ></button>
+               
             </ng-template>
         </p-dialog>
 

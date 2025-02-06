@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Users, Users1 } from '../models/usersModels'; 
+import { Clients } from '../models/clientsModels';
 
 
 @Injectable({
@@ -13,9 +13,9 @@ import { Users, Users1 } from '../models/usersModels';
     constructor(private https:HttpClient) { }
    
       // Method to retrieve a list of employees
-      listClients(): Observable<Users[]> {
+      listClients(): Observable<Clients[]> {
         // Sends a GET request to the specified URL and returns an Observable of Users array
-        return this.https.get<Users[]>(this.url + 'Administration/ClientsList');
+        return this.https.get<Clients[]>(this.url + 'Administration/ClientsList');
       }
 
    

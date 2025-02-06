@@ -1,20 +1,25 @@
-// export class Clients1{
-//     // intUser?:number = 0;
-//     strFullName? : string = '';
-//     strPhone? : string= '' ;
-//     strEmail? : string= '';
-//     intRolId?:number= 0;
-//    // strRolName?:string = '';
-//     strStatus?:string= '';
-//     intEstatus?:number = 0;
-// }
+ export class Clients1{
+
+    strFullName? : string = '';
+    strLastName? : string = '';
+    strPhone? : string = '';
+    strEmail? : string = '';
+    intCity?:number = 0;
+    strCityName?:string = '';    
+    datDate?:Date;
+    intCP?:number = 0;
+    strAdress?:string = '';
+    strReferences?:string = '';
+    strPaymentMethod?:string = '';
+
+ }
 export interface Clients{
     // intUser?:number ;
     strFullName? : string;
     strPhone? : string;
     strEmail? : string;
     intCity?:number;
-    strCity?:string;    
+    strCityName?:string;    
     datDate?:Date;
     
 }
@@ -26,6 +31,6 @@ export class ClientComponent {
         strPhone: '',
         strEmail: '',
         intCity: 0,       // O undefined
-        strCity: ''
+        strCityName: ''
     };
 }

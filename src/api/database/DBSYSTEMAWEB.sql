@@ -297,3 +297,51 @@ CREATE TABLE `tbClients` (
   PRIMARY KEY (`intClient`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32
 
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_tbClients_list`(
+)
+BEGIN
+	SELECT 
+    c.intClient,
+    SUBSTRING_INDEX(c.strFullName, ' ', 1) AS strFullName,
+    SUBSTRING_INDEX(SUBSTRING_INDEX(c.strFullName, ' ', -1), ' ', 1) AS strLastName,
+    c.strPhone,
+    c.strEmail,
+    r.strRolName,
+	DATE_FORMAT(c.datDateUp , '%d %b DEL %Y') AS datDateUp,
+    ci.strCityName,
+    c.intCP,
+    c.strAdress,
+    c.strReferences,
+    pm.strPaymentMethod 
+    FROM tbClients C
+    INNER JOIN tbRol r ON r.intRolId = C.intRol
+    INNER JOIN tbCity ci ON ci.intCity = c.intCity
+    INNER JOIN tbPaymentsMethod pm ON pm.intPayment = c.intPayment;
+
+END
+
+CREATE TABLE `tbcity` (
+  `intCity` int NOT NULL AUTO_INCREMENT,
+  `strCityName` varchar(250) DEFAULT NULL,
+  `intState` int DEFAULT NULL,
+  `intStatus` int DEFAULT NULL,
+  PRIMARY KEY (`intCity`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+CREATE TABLE `tbpaymentsmethod` (
+  `intPayment` int NOT NULL AUTO_INCREMENT,
+  `strPaymentMethod` varchar(250) DEFAULT NULL,
+  `intStatus` int DEFAULT NULL,
+  PRIMARY KEY (`intPayment`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+CREATE TABLE `tbstate` (
+  `intState` int NOT NULL AUTO_INCREMENT,
+  `strStateName` varchar(250) DEFAULT NULL,
+  `intStatus` int DEFAULT NULL,
+  PRIMARY KEY (`intState`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
