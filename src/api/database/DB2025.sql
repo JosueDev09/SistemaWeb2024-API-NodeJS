@@ -308,3 +308,29 @@ DELIMITER ;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2025-02-06 17:36:16
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_tbOrders_list`()
+BEGIN
+	SELECT
+    o.intOrder,
+    c.strFullName as strClientName,
+    c.strPhone,
+    c.strEmail,
+    c.strAdress,
+    c.strReferences,
+    c.intCP,
+    ci.strCityName,
+    DATE_FORMAT(o.datDateUp , '%d %b DEL %Y') AS datDateUp,
+    p.strPaymentMethod,
+    so.strStatusName,
+    o.dblTotal
+    FROM tbOrders o
+    INNER JOIN tbClients c ON c.intClient = o.intClient
+    INNER JOIN tbPaymentsMethod p ON p.intPayment =c.intPayment
+    INNER JOIN tbStatusOrders so ON so.intStatusOrder = o.intStatusOrder 
+    INNER JOIN tbCity ci ON ci.intCity = c.intCity;
+
+END
+DELIMITER ;
+
+CREATE TABLE tbStatusOrders(intStatusOrder int AUTO_INCREMENT, strStatusName varchar(250),strDescriptionStatus VARCHAR(250), PRIMARY KEY (intStatusOrder))
