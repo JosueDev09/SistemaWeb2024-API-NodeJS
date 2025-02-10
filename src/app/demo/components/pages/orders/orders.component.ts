@@ -8,6 +8,8 @@ import { UsersService } from 'src/app/demo/service/users.service';
 import Swal from 'sweetalert2'
 import { asRoughMinutes } from '@fullcalendar/core/internal';
 import { TableModule } from 'primeng/table';
+import { Orders, Orders1 } from 'src/app/demo/models/ordersModel';
+import { OrdersService } from 'src/app/demo/service/orders.service';
 
 @Component({
     templateUrl: './orders.component.html',
@@ -17,17 +19,17 @@ export class OrdersComponent implements OnInit {
    
 // Array to hold the list of users
 
-users: Users[] = [];
+orders: Orders[] = [];
 
 // Object to represent a single user
 //user: Users = {};
-user: Users[] = [];
+order: Orders[] = [];
 
 // Array to hold the list of user roles or additional user information
-users1: Users1[] = [];
+orders1: Orders1[] = [];
 
 // Object to represent a single user role or additional information
-user1: Users1 = {};
+order1: Orders1 = {};
 
 // Variable to hold a string representation of an employee (may be used for searching or filtering)
 strEmpleado: any;
@@ -56,21 +58,52 @@ statuses: any[] = [];
 rowsPerPageOptions = [5, 10, 20];
    
 
-    constructor(private productService: ProductService, private messageService: MessageService,private usersService: UsersService) { }
+    constructor(private orderService: OrdersService, private messageService: MessageService,private usersService: UsersService) { }
 
     ngOnInit() {
-       
+       this.fnlistOrders();
+    }
+    
+    fnlistOrders() {
+        this.orderService.getOrders().subscribe(
+            (res:any) => {         
+           if (Array.isArray(res)) {
+             this.order = res[0]; // Asegúrate de que response sea un array
+         } else {
+             console.error('Respuesta no válida:', res);
+             this.order = []; // Maneja el error adecuadamente
+         }
+       } 
+         );
     }
 
+    fnViewOrder(select:any){
+        this.order1.strClientName = select.strClientName
+        this.order1.datDateUp = select.datDateUp
+        this.order1.strPaymentMethod = select.strPaymentMethod
+        this.order1.strStatusName = select.strStatusName
+        this.order1.strPhone = select.strPhone
+        this.order1.strEmail = select.strEmail
+        this.order1.intCP = select.intCP
+        this.order1.strAdress = select.strAdress
+        this.order1.strReferences = select.strReferences
+        this.order1.strCityName = select.strCityName
+
+        this,this.ordersDialog=true;
+
+
+    }
+
+
     openNew() {
-        this.user1 = {};
+        this.order1 = {};
         this.submitted = false;
         this.ordersDialog = true;
     }
 
 
     hideAddDialog() {
-        this.user1 = {};
+        this.order1 = {};
         this.ordersDialog = false;
         this.submitted = false;
     }

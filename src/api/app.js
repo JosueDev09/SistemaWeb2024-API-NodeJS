@@ -5,6 +5,7 @@ import authRoutes from './routes/auth.routes.js';
 import employeesRoutes from './routes/employees.routes.js';
 import productsRoutes from './routes/products.routes.js';
 import clientRoutes from './routes/clients.routes.js';
+import ordersRoutes from  './routes/orders.routes.js';
 
 
 
@@ -22,4 +23,5 @@ app.use('/api/',authRoutes);
 app.use('/api/',employeesRoutes);
 app.use('/api/',productsRoutes);
 app.use('/api/',clientRoutes);
+app.use('/api',ordersRoutes)
 export default app;
