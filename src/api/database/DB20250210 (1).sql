@@ -269,6 +269,216 @@ LOCK TABLES `tbusers` WRITE;
 INSERT INTO `tbusers` VALUES (1,'Josue Flores','JosueFg','admin','5584893998','josue@gmail.com',1,1,'2025-02-10 12:43:58'),(2,'Fito Flores','FitoFg','admin1','5584893998','fito@gmail.com',2,1,'2025-02-10 12:44:21');
 /*!40000 ALTER TABLE `tbusers` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping routines for database 'dbcumtual'
+--
+/*!50003 DROP PROCEDURE IF EXISTS `sp_authLoginUsuario` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_authLoginUsuario`(
+    IN p_username VARCHAR(50),
+    IN p_password VARCHAR(255)
+)
+BEGIN
+   
+
+    -- Verificar si el usuario existe
+    IF EXISTS(SELECT 1 FROM tbusers WHERE strUser = p_username AND strPassword = p_password)
+    THEN
+		SELECT strUser, strPassword, intRolId FROM tbusers 
+		WHERE strUser = p_username AND strPassword = p_password;
+    ELSE
+		SELECT "User not found";
+    END IF;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_SaveEmployees` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_SaveEmployees`(
+	IN p_strFullName VARCHAR(50),
+	IN p_strUser VARCHAR(255),
+	IN p_strPassword VARCHAR(50),
+    IN p_strPhoneNumber VARCHAR(255),
+	IN p_strEmail VARCHAR(50),
+    IN p_intRolId VARCHAR(255),
+	IN p_intStatus int
+	
+)
+BEGIN
+	
+    
+    -- Verificar si el usuario existe
+    IF NOT EXISTS(SELECT 1 FROM tbusers WHERE strUser = p_strUser AND strEmail = p_strEmail)
+    THEN
+		INSERT INTO tbUsers(strFullName, strUser,strPassword,strPhoneNumber, strEmail, intRolId, intEstatus, datDate)
+        VALUES(p_strFullName, p_strUser, p_strPassword,p_strPhoneNumber,p_strEmail,p_intRolId, p_intStatus,now());
+    ELSE
+		SELECT 'ALREADY EXISTS EMPLOYEE';
+    END IF;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_tbClients_list` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_tbClients_list`(
+)
+BEGIN
+	SELECT 
+    c.intClient,
+    SUBSTRING_INDEX(c.strFullName, ' ', 1) AS strFullName,
+    SUBSTRING_INDEX(SUBSTRING_INDEX(c.strFullName, ' ', -1), ' ', 1) AS strLastName,
+    c.strPhone,
+    c.strEmail,
+    r.strRolName,
+	DATE_FORMAT(c.datDateUp , '%d %b DEL %Y') AS datDateUp,
+    ci.strCityName,
+    c.intCP,
+    c.strAdress,
+    c.strReferences,
+    pm.strPaymentMethod 
+    FROM tbClients C
+    INNER JOIN tbRol r ON r.intRolId = C.intRol
+    INNER JOIN tbCity ci ON ci.intCity = c.intCity
+    INNER JOIN tbPaymentsMethod pm ON pm.intPayment = c.intPayment;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_tbOrders_list` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_tbOrders_list`()
+BEGIN
+	SELECT
+    o.intOrder,
+    c.strFullName as strClientName,
+    c.strPhone,
+    c.strEmail,
+    c.strAdress,
+    c.strReferences,
+    c.intCP,
+    ci.strCityName,
+    DATE_FORMAT(o.datDateUp , '%d %b DEL %Y') AS datDateUp,
+    p.strPaymentMethod,
+    so.strStatusName,
+    o.dblTotal
+    FROM tbOrders o
+    INNER JOIN tbClients c ON c.intClient = o.intClient
+    INNER JOIN tbPaymentsMethod p ON p.intPayment =c.intPayment
+    INNER JOIN tbStatusOrders so ON so.intStatusOrder = o.intStatusOrder 
+    INNER JOIN tbCity ci ON ci.intCity = c.intCity;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_tbproducts_list` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_tbproducts_list`(
+)
+BEGIN
+   SELECT 
+   p.strCodeProduct,
+   P.strNameProduct,
+   P.dblPrice,
+   p.intCategorie,
+    CASE WHEN p.intStatus = 1 THEN 'ACTIVE' ELSE 'INACTIVE' END strStatus
+   
+   FROM tbproducts p ;
+   
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_tbusers_list` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_tbusers_list`(
+
+)
+BEGIN
+   SELECT 
+   u.intUserId intUser,
+   u.strFullName strFullName,
+   u.intRolId,
+   r.strRolName,
+   u.strPhoneNumber strPhone,
+   u.strEmail strEmail,
+   u.intEstatus,
+   CASE WHEN u.intEstatus = 1 THEN 'ACTIVE' ELSE 'INACTIVE' END strStatus
+   
+   FROM tbusers u
+   INNER JOIN tbrol r ON r.intRolId = u.intRolId;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -279,4 +489,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-02-10 17:56:18
+-- Dump completed on 2025-02-10 17:57:49
