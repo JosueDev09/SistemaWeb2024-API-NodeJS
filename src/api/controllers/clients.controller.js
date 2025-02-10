@@ -10,7 +10,8 @@ export const listClients = async (req, res) => {
         // Get a database connection
         const conn = await getConnection();
         // Execute the stored procedure to retrieve clients
-        const result = await conn.execute('CALL thewebsystem2024.sp_tbclients_list');
+        const result = await conn.execute('CALL dbCumtual.sp_tbclients_list');
+       // const result = await conn.execute('CALL thewebsystem2024.sp_tbclients_list');
         // Send the result back as a JSON response
         res.json(result[0]);
     } catch (error) {

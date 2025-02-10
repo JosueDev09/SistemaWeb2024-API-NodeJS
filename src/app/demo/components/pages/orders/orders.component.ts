@@ -33,21 +33,14 @@ user1: Users1 = {};
 strEmpleado: any;
 
 // Array to hold positions or roles associated with employees
-listPuestoR: any[] = [];
+
 
 // Flag to control the visibility of the employee update dialog
-employeeUpdateDialog: boolean = false;
+
 
 // Flag to control the visibility of the employee list dialog
-employeesDialog: boolean = false;
+ordersDialog: boolean = false;
 
-// Flag to control the visibility of the product deletion confirmation dialog
-deleteProductDialog: boolean = false;
-
-// Flag to control the visibility of the bulk product deletion confirmation dialog
-deleteProductsDialog: boolean = false;
-
-// Array to hold selected products for operations like deletion
 selectedProducts: Product[] = [];
 
 // Flag to indicate if a form has been submitted
@@ -66,153 +59,24 @@ rowsPerPageOptions = [5, 10, 20];
     constructor(private productService: ProductService, private messageService: MessageService,private usersService: UsersService) { }
 
     ngOnInit() {
-        //  this.usersService.listEmpleados1().then(data => this.users = data);
-          this.fnlistEmployees(); 
-          this.fnListRol();
-        // this.cols = [
-        //     { field: 'strEmpleado', header: 'Empleado' },
-        //     { field: 'strNombre', header: 'Nombre' },
-        //     { field: 'strPuesto', header: 'Puesto' },
-        //     { field: 'strTelefono', header: 'Telefono' },
-        //     { field: 'strEmail', header: 'Correo' }
-            
-        // ];
-
-
+       
     }
-
-    fnlistEmployees () {
-        this.usersService.listEmployees().subscribe(
-           (res:any) => {
-          //   this.user= res[0];
-          // //  console.log(res);
-      
-          // }, error => {
-          //   console.log(error);
-          // }
-          if (Array.isArray(res)) {
-            this.user = res[0]; // Asegúrate de que response sea un array
-        } else {
-            console.error('Respuesta no válida:', res);
-            this.user = []; // Maneja el error adecuadamente
-        }
-      } 
-        );
-      }
-      
-      fnListRol(){
-        this.usersService.listRol().subscribe(
-          res => {
-            
-            this.listPuestoR=res;
-            console.log(res);
-          }, error => {
-            console.log(error);
-          }     
-        );
-          }
-
-          fnAddEmployees(employees:Users1):void{
-            // alert("entro")
-             this.usersService.addEmployees(employees).subscribe(
-               res=>{
-               if(res){
-                this.messageService.add({ severity: 'success', summary: 'Succsesfully', detail: 'Created Employee', life: 3000 });
-                 console.log(res);
-            
-                 this.fnlistEmployees();
-               }
-               else{
-                 alert("Error")
-               }
-             });
-           }
-         
-        
-         
-           fnUpdateEmployees(employees:Users1):void{
-             // alert("entro")
-              this.usersService.updateEmployees(employees).subscribe(
-                res=>{
-                
-                if(res){
-                  this.messageService.add({ severity: 'success', summary: 'Succsesfully', detail: 'Employee Updated', life: 3000 });
-                  console.log(res);
-                  
-                  this.fnlistEmployees();
-                }
-                else{
-                  alert("Error")
-                }
-              });
-            }
 
     openNew() {
         this.user1 = {};
         this.submitted = false;
-        this.employeesDialog = true;
+        this.ordersDialog = true;
     }
 
-    // editEmployee(product: Product) {
-    //   //  this.product = { ...product };
-    //     this.employeesDialog = true;
-    // }
-
-    // deleteProduct(product: Product) {
-    //     this.deleteProductDialog = true;
-    //    // this.product = { ...product };
-    // }
-
-    confirmDeleteSelected() {
-        this.deleteProductsDialog = false;
-       // this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-        this.selectedProducts = [];
-    }
-
-    confirmDelete() {
-        this.deleteProductDialog = false;
-        //this.products = this.products.filter(val => val.id !== this.product.id);
-        this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-       // this.product = {};
-    }
 
     hideAddDialog() {
         this.user1 = {};
-        this.employeesDialog = false;
+        this.ordersDialog = false;
         this.submitted = false;
     }
 
-    hideemployeeUpdateDialog() {
-        this.user1 = {};
-        this.employeeUpdateDialog = false;
-        this.submitted = false;
-    }
 
-    // saveProduct() {
-    //     this.submitted = true;
-
-    //     if (this.user.strEmpleado?.trim()) {
-    //         if (this.product.id) {
-    //             @ts-ignore
-    //             this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value : this.product.inventoryStatus;
-    //             this.products[this.findIndexById(this.product.id)] = this.product;
-    //             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-    //         } else {
-    //             this.product.id = this.createId();
-    //             this.product.code = this.createId();
-    //             this.product.image = 'product-placeholder.svg';
-    //             @ts-ignore
-    //             this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-    //             this.products.push(this.product);
-    //             this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-    //         }
-
-    //         this.user = [...this.user];
-    //         this.productDialog = false;
-    //         this.user = {};
-    //     }
-    // }
+    
 
     findIndexById(id: string): number {
         let index = -1;

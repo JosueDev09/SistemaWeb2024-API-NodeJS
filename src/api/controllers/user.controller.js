@@ -77,8 +77,8 @@ export const listEmployes = async (req, res) => {
         // Get a database connection
         const conn = await getConnection();
         // Execute the stored procedure to retrieve employees
-        //const result = await conn.execute('CALL dbCumtual.sp_tbusers_list');
-        const result = await conn.execute('CALL thewebsystem2024.sp_tbusers_list');
+        const result = await conn.execute('CALL dbCumtual.sp_tbusers_list');
+        //const result = await conn.execute('CALL thewebsystem2024.sp_tbusers_list');
         // Send the result back as a JSON response
         res.json(result[0]);
     } catch (error) {
