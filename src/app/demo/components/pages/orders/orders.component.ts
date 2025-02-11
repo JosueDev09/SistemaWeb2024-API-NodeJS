@@ -36,7 +36,7 @@ strEmpleado: any;
 
 // Array to hold positions or roles associated with employees
 
-
+selectedTab: number = 1;
 // Flag to control the visibility of the employee update dialog
 
 
@@ -77,6 +77,10 @@ rowsPerPageOptions = [5, 10, 20];
          );
     }
 
+    selectTab(tabNumber: number) {
+        this.selectedTab = tabNumber;
+      }
+
     fnViewOrder(select:any){
         this.order1.strClientName = select.strClientName
         this.order1.datDateUp = select.datDateUp
@@ -93,6 +97,7 @@ rowsPerPageOptions = [5, 10, 20];
 
 
     }
+
 
 
     openNew() {

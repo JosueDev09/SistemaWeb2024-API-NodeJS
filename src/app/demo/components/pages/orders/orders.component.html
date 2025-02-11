@@ -90,70 +90,96 @@
               
             </p-table>
         </div>
-         <p-dialog [(visible)]="ordersDialog" [style]="{width: '40%'}" header="View Order" [modal]="true" class="p-fluid">
-            <ng-template pTemplate="content">                    
+        <p-dialog [(visible)]="ordersDialog" [style]="{width: '40%'}" header="View Order" [modal]="true" class="p-fluid" [draggable]="false" [resizable]="false">
+            <ng-template pTemplate="content">   
+                
                 <div class="flex space-x-4">
-                    <div class="field w-full mr-7">
-                        <label for="nombre">Name</label>
-                        <input type="text" disabled pInputText id="strName" [(ngModel)]="order1.strClientName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !order1.strClientName}"/>
+                    <!-- Tab 1 -->
+                    <div 
+                    [class.bg-blue-200]="selectedTab === 1" 
+                    (click)="selectTab(1)" 
+                    class="cursor-pointer py-2 px-4 text-center text-sm font-bold rounded-lg hover:bg-blue-300 transition-all duration-300 border border-transparent hover:border-blue-300">
+                    Client Information
+                  </div>
+                  
+                    <!-- Tab 2 -->
+                    <div 
+                      [class.bg-blue-200]="selectedTab === 2" 
+                      (click)="selectTab(2)" 
+                      class="cursor-pointer py-2 px-4 rounded-t-lg text-center text-sm font-bold  rounded-xl hover:bg-blue-100  transition-all duration-500 ml-2">
+                     Order Details
+                    </div>
+                             
+                  
+                  </div>
+                  <div *ngIf="selectedTab === 1" class="p-4 rounded-b-lg">
+                    <div class="flex space-x-4">
+                        <div class="field w-full mr-7">
+                            <label for="nombre">Name</label>
+                            <input type="text" disabled pInputText id="strName" [(ngModel)]="order1.strClientName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !order1.strClientName}"/>
+                            
+                        </div>
+                        <div class="field w-full">
+                            <label for="correo">Order Date</label>
+                            <input type="text"  disabled pInputText id="datDate" [(ngModel)]="order1.datDateUp" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !order1.datDate}"/>
+                         
+                        </div>
+                    </div>
+                
+    
+                    <div class="flex space-x-4">
+                        <div class="field w-full mr-7">
+                            <label for="nombre">Phone</label>
+                            <input type="text" disabled pInputText id="strPhone" [(ngModel)]="order1.strPhone" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.strPhone}"/>
+          
+                        </div>
+                        <div class="field w-full">
+                            <label for="correo">Email</label>
+                            <input type="text" disabled pInputText id="strEmail" [(ngModel)]="order1.strEmail" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.strCityName}"/>
+                
+                        </div>
+                    </div>
+                </div>
+                
+                <div *ngIf="selectedTab === 2" class="p-4 rounded-b-lg">
+    
+                    <div class="flex space-x-4">
+                        <div class="field w-full mr-7">
+                            <label for="correo">City</label>
+                            <input type="text"  disabled pInputText id="strCity" [(ngModel)]="order1.strCityName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strCityName}"/>
+              
+                        </div>
+                        <div class="field w-full mr-7">
+                            <label for="nombre">Zip</label>
+                            <input type="text"  disabled pInputText id="intCP" [(ngModel)]="order1.intCP" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strFullName}"/>
+                    
+                        </div>
+                        <div class="field w-full">
+                            <label for="correo">Method payment</label>
+                            <input type="text" disabled pInputText id="strPaymentMethod" [(ngModel)]="order1.strPaymentMethod" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strPaymentMethod}"/>
+                    
+                        </div>
+                    </div>
+    
+                    <div class="flex space-x-4">
+                        <div class="field w-full mr-7">
+                            <label for="nombre">Address</label>
+                            <input type="text" disabled pInputText id="strName" [(ngModel)]="order1.strAdress" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strAdress}"/>
+                     
+                        </div>
+                       
+                    </div>
+    
+                    
+    
+                    <div class="flex space-x-4">
+                        <div class="field w-full mr-7">
+                            <label for="nombre">References</label>
+                            <input type="text" disabled pInputText id="strName" [(ngModel)]="order1.strReferences" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strReferences}"/>
+                     
+                        </div>
                         
                     </div>
-                    <div class="field w-full">
-                        <label for="correo">Order Date</label>
-                        <input type="text"  disabled pInputText id="datDate" [(ngModel)]="order1.datDateUp" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !order1.datDate}"/>
-                     
-                    </div>
-                </div>
-
-                <div class="flex space-x-4">
-                    <div class="field w-full mr-7">
-                        <label for="nombre">Phone</label>
-                        <input type="text" disabled pInputText id="strPhone" [(ngModel)]="order1.strPhone" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user.strPhone}"/>
-      
-                    </div>
-                    <div class="field w-full">
-                        <label for="correo">Email</label>
-                        <input type="text" disabled pInputText id="strEmail" [(ngModel)]="order1.strEmail" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !user1.strCityName}"/>
-            
-                    </div>
-                </div>
-
-                <div class="flex space-x-4">
-                    <div class="field w-full mr-7">
-                        <label for="correo">City</label>
-                        <input type="text"  disabled pInputText id="strCity" [(ngModel)]="order1.strCityName" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strCityName}"/>
-          
-                    </div>
-                    <div class="field w-full mr-7">
-                        <label for="nombre">Zip</label>
-                        <input type="text"  disabled pInputText id="intCP" [(ngModel)]="order1.intCP" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strFullName}"/>
-                
-                    </div>
-                    <div class="field w-full">
-                        <label for="correo">Method payment</label>
-                        <input type="text" disabled pInputText id="strPaymentMethod" [(ngModel)]="order1.strPaymentMethod" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strPaymentMethod}"/>
-                
-                    </div>
-                </div>
-
-                <div class="flex space-x-4">
-                    <div class="field w-full mr-7">
-                        <label for="nombre">Address</label>
-                        <input type="text" disabled pInputText id="strName" [(ngModel)]="order1.strAdress" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strAdress}"/>
-                 
-                    </div>
-                   
-                </div>
-
-                
-
-                <div class="flex space-x-4">
-                    <div class="field w-full mr-7">
-                        <label for="nombre">References</label>
-                        <input type="text" disabled pInputText id="strName" [(ngModel)]="order1.strReferences" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !client1.strReferences}"/>
-                 
-                    </div>
-                    
                 </div>
             
             </ng-template>
