@@ -90,7 +90,7 @@
               
             </p-table>
         </div>
-        <p-dialog [(visible)]="ordersDialog" [style]="{width: '55%'}" header="View Order" [modal]="true" class="p-fluid" [draggable]="false" [resizable]="false">
+        <p-dialog [(visible)]="ordersDialog" [style]="{width: '65%'}" header="View Order" [modal]="true" class="p-fluid" [draggable]="false" [resizable]="false">
             <ng-template pTemplate="content">   
                 
             <div class="flex space-x-4">
@@ -212,6 +212,8 @@
                                 <th pSortableColumn="strCodeProduct" style="text-align: center;">Code Product </th>
                                 <th pSortableColumn="strProductImage">Product Image</th>
                                 <th pSortableColumn="strProductName" style="text-align: center;" >Product Name</th>
+                                <th pSortableColumn="strProductColor" style="text-align: center;" >Product Color</th>
+                                <th pSortableColumn="strProductSize" style="text-align: center;" >Product Size</th>
                                 <th pSortableColumn="intQuantity" style="text-align: center;">Quantity</th>
                                 <th pSortableColumn="dblTotal" style="text-align: center;">Total</th>
                                 
@@ -236,6 +238,14 @@
                                 <td style="width:14%; min-width:8rem; text-align: center;">
                                     <span class="p-column-title">Product Name</span>
                                     {{orderproduct.strNameProduct}}
+                                </td>
+                                <td style="width:14%; min-width:8rem; text-align: center;">
+                                    <span class="p-column-title">Product Color</span>
+                                    {{orderproduct.strProductColor}}
+                                </td>
+                                <td style="width:14%; min-width:8rem; text-align: center;">
+                                    <span class="p-column-title">Product Size</span>
+                                    {{orderproduct.strProductSize}}
                                 </td>
                                 <td style="width:14%; min-width:8rem; text-align: center;">
                                     <span class="p-column-title">Quantity</span>
