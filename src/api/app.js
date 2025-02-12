@@ -23,5 +23,5 @@ app.use('/api/',authRoutes);
 app.use('/api/',employeesRoutes);
 app.use('/api/',productsRoutes);
 app.use('/api/',clientRoutes);
-app.use('/api',ordersRoutes)
+app.use('/api',ordersRoutes);
 export default app;

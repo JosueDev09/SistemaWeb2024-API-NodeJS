@@ -1,5 +1,6 @@
 export class Orders1{
-
+    intOrder?:number = 0;
+    intClient?:number = 0;
     strClientName? : string = '';
     strPhone? : string = '';
     strEmail? : string = '';
@@ -11,8 +12,31 @@ export class Orders1{
     strReferences?:string = '';
     strPaymentMethod?:string = '';
     strStatusName?:string = '';
+    intQuantityProducts?:number = 0;
+    strNameProduct?:string = '';
+    idProduct?:number = 0;
+    strCodeProduct?:string = '';
 
  }
+ export class OrdersProducts1{
+
+    intQuantityProducts?:number = 0;
+    strNameProduct?:string = '';
+    idProduct?:number = 0;
+    strCodeProduct?:string = '';
+
+ }
+
+ export interface OrdersProducts{
+    // intUser?:number ;
+    inClient?:number;
+    idProduct?:number;
+    strCodeProduct? : string;
+    strNameProduct? : string;
+    intQuantityProducts?:number;
+    
+    
+}
 export interface Orders{
     // intUser?:number ;
     strClientName? : string;

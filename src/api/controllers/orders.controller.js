@@ -14,3 +14,22 @@ export const getOrders = async (req, res) => {
     }
 
 }
+
+export const getOrderProducts = async (req, res) => {
+
+    const { intClient, intOrder } = req.query;
+    const params =[
+        intOrder, intClient
+    ]
+    try {
+        const connection = await getConnection();
+        const result = await connection.execute('CALL sp_tbordersproducts_list(?,?)', params);
+
+        res.json(result[0]);
+        res.status(200);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Error to get order products' });
+    }
+
+}

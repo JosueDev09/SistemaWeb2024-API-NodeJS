@@ -8,7 +8,7 @@ import { UsersService } from 'src/app/demo/service/users.service';
 import Swal from 'sweetalert2'
 import { asRoughMinutes } from '@fullcalendar/core/internal';
 import { TableModule } from 'primeng/table';
-import { Orders, Orders1 } from 'src/app/demo/models/ordersModel';
+import { Orders, Orders1, OrdersProducts } from 'src/app/demo/models/ordersModel';
 import { OrdersService } from 'src/app/demo/service/orders.service';
 
 @Component({
@@ -24,6 +24,8 @@ orders: Orders[] = [];
 // Object to represent a single user
 //user: Users = {};
 order: Orders[] = [];
+
+orderproduct: OrdersProducts[] = [];
 
 // Array to hold the list of user roles or additional user information
 orders1: Orders1[] = [];
@@ -77,6 +79,20 @@ rowsPerPageOptions = [5, 10, 20];
          );
     }
 
+    fnListOrdersProduct(intClient:number,intOrder:number) {       
+
+        this.orderService.getOrdersProducts(intClient,intOrder).subscribe(
+            (res:any) => {         
+           if (Array.isArray(res)) {
+             this.orderproduct = res[0]; // Asegúrate de que response sea un array
+         } else {
+             console.error('Respuesta no válida:', res);
+             this.orderproduct = []; // Maneja el error adecuadamente
+         }
+       } 
+         );
+    }
+
     selectTab(tabNumber: number) {
         this.selectedTab = tabNumber;
       }
@@ -92,8 +108,11 @@ rowsPerPageOptions = [5, 10, 20];
         this.order1.strAdress = select.strAdress
         this.order1.strReferences = select.strReferences
         this.order1.strCityName = select.strCityName
+        
 
         this,this.ordersDialog=true;
+
+        this.fnListOrdersProduct(select.intOrder,select.intClient);
 
 
     }

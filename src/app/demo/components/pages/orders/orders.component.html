@@ -17,7 +17,7 @@
             [rows]="10" 
             [globalFilterFields]="['Order']" 
             [paginator]="true" 
-            [rowsPerPageOptions]="[10,20,30]" 
+            
             [showCurrentPageReport]="true" 
             currentPageReportTemplate="Show {first} to {last} of {totalRecords} orders" 
             
@@ -90,28 +90,35 @@
               
             </p-table>
         </div>
-        <p-dialog [(visible)]="ordersDialog" [style]="{width: '40%'}" header="View Order" [modal]="true" class="p-fluid" [draggable]="false" [resizable]="false">
+        <p-dialog [(visible)]="ordersDialog" [style]="{width: '55%'}" header="View Order" [modal]="true" class="p-fluid" [draggable]="false" [resizable]="false">
             <ng-template pTemplate="content">   
                 
-                <div class="flex space-x-4">
+            <div class="flex space-x-4">
                     <!-- Tab 1 -->
-                    <div 
+                <div 
                     [class.bg-blue-200]="selectedTab === 1" 
                     (click)="selectTab(1)" 
                     class="cursor-pointer py-2 px-4 text-center text-sm font-bold rounded-lg hover:bg-blue-300 transition-all duration-300 border border-transparent hover:border-blue-300">
                     Client Information
-                  </div>
+                </div>
                   
                     <!-- Tab 2 -->
-                    <div 
+                <div 
                       [class.bg-blue-200]="selectedTab === 2" 
                       (click)="selectTab(2)" 
                       class="cursor-pointer py-2 px-4 rounded-t-lg text-center text-sm font-bold  rounded-xl hover:bg-blue-100  transition-all duration-500 ml-2">
                      Order Details
-                    </div>
+                </div>
+                    <!-- Tab 3 -->
+                <div 
+                    [class.bg-blue-200]="selectedTab === 3" 
+                    (click)="selectTab(3)" 
+                    class="cursor-pointer py-2 px-4 rounded-t-lg text-center text-sm font-bold  rounded-xl hover:bg-blue-100  transition-all duration-500 ml-2">
+                    Products Details
+                </div>
                              
                   
-                  </div>
+            </div>
                   <div *ngIf="selectedTab === 1" class="p-4 rounded-b-lg">
                     <div class="flex space-x-4">
                         <div class="field w-full mr-7">
@@ -180,6 +187,81 @@
                         </div>
                         
                     </div>
+                </div>
+
+                <div *ngIf="selectedTab === 3" class="p-4 rounded-b-lg">
+                    <p-table #dt [value]="orderproduct" 
+                    [columns]="cols" 
+                    responsiveLayout="scroll" 
+                    [rows]="10" 
+                    [globalFilterFields]="['Order']" 
+                    [paginator]="true" 
+                    
+                    [showCurrentPageReport]="true" 
+                    currentPageReportTemplate="Show {first} to {last} of {totalRecords} orders" 
+                    
+                    [rowHover]="true" dataKey="id">
+                        
+                      
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width: 3rem">
+                                    <!-- <p-tableHeaderCheckbox></p-tableHeaderCheckbox> -->
+                                </th>
+                                <th pSortableColumn="intProduct">Product Id </th>
+                                <th pSortableColumn="strCodeProduct" style="text-align: center;">Code Product </th>
+                                <th pSortableColumn="strProductImage">Product Image</th>
+                                <th pSortableColumn="strProductName" style="text-align: center;" >Product Name</th>
+                                <th pSortableColumn="intQuantity" style="text-align: center;">Quantity</th>
+                                <th pSortableColumn="dblTotal" style="text-align: center;">Total</th>
+                                
+                                <th></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-orderproduct>
+                            <tr >
+                                <td>
+                                    <!-- <p-tableCheckbox [value]="user"></p-tableCheckbox> -->
+                                </td>
+                                <td style="width:10%; min-width:10rem;"><span class="p-column-title">Product Id</span>
+                                    #{{orderproduct.intProducts}}
+                                </td>
+                                <td style="width:20%; min-width:10rem; text-align: center;"><span class="p-column-title">Code Product</span>
+                                    {{orderproduct.strCodeProduct}}
+                                </td>
+                                <td style="width:14%; min-width:10rem;">
+                                    <span class="p-column-title">Product Image</span>
+                                    {{orderproduct.strProductImage}}
+                                </td>                       
+                                <td style="width:14%; min-width:8rem; text-align: center;">
+                                    <span class="p-column-title">Product Name</span>
+                                    {{orderproduct.strNameProduct}}
+                                </td>
+                                <td style="width:14%; min-width:8rem; text-align: center;">
+                                    <span class="p-column-title">Quantity</span>
+                                    {{orderproduct.intQuantityProducts}}
+                                </td>
+                                <td style="width:14%; min-width:8rem; text-align: center;">
+                                    <span class="p-column-title">Total</span>
+                                   $ {{orderproduct.dblTotal}}
+                                </td>
+                               
+                               
+                               
+                                <!-- <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Estatus</span>
+                                    <span [class]="'product-badge status-' + (user.Estatus ? user.Estatus.toLowerCase() : '')">{{user.Estatus}}</span>
+                                </td> -->
+                                <td>
+                                    <div class="flex">
+                                       
+                                        
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                      
+                    </p-table>
+                    
                 </div>
             
             </ng-template>
