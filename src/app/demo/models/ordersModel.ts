@@ -23,6 +23,8 @@ export class Orders1{
     intQuantityProducts?:number = 0;
     strNameProduct?:string = '';
     idProduct?:number = 0;
+    strSizeName? : string= '';
+    strColorName? : string= '';
     strCodeProduct?:string = '';
 
  }
@@ -33,6 +35,8 @@ export class Orders1{
     idProduct?:number;
     strCodeProduct? : string;
     strNameProduct? : string;
+    strSizeName? : string;
+    strColorName? : string;
     intQuantityProducts?:number;
     
     
