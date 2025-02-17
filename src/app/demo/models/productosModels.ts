@@ -1,5 +1,5 @@
 export class Productos1{
-    intProduct?: number = 0;
+    //intProduct?: number = 0;
     //strCodigoProducto?: string = ''; 
     strNameProduct?:string = '';  
     strDescriptionProduct?:string = '';  
@@ -8,8 +8,8 @@ export class Productos1{
     intCategorie?:number = 0;  
     intColor?:number = 0;
     intSize?:number = 0;
-    // strStatus?:string = '';  
-    // Status?:string = '';  
+    strStatus?:string= '';
+    intStatus?:number = 0;
 }
 export interface Productos{
     intProduct?: number;
@@ -27,4 +27,6 @@ export interface Productos{
      strColorName?: string;  
      intSize?:number;
      strSizeName?:string;
+     intStatus?:number;
+    strStatus?:string;    
 }

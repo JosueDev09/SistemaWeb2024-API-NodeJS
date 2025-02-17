@@ -36,9 +36,18 @@ export const getProductsDes = async (req, res) => {
 
 export const saveProduct = async (req, res) => {
     try {
-        const { strProductName, strDescription,intCategorie,intColor,intSize, dblPrice,intQuantity} = req.body;
+        const { strNameProduct, strDescriptionProduct,intCategorie,intColor,intSize, dblPrice,intQuantity,strStatus} = req.body;
 
-        const params = [strProductName, strDescription,intCategorie,intColor,intSize, dblPrice,intQuantity];
+        const params = [strNameProduct, 
+            strDescriptionProduct,
+            intCategorie,
+            intColor,
+            intSize, 
+            dblPrice,
+            intQuantity,
+            strStatus];
+
+            console.log('DATOS:',params);
         const conn = await getConnection();
         const result = await conn.execute('CALL dbCumtual.sp_tbproducts_save(?,?,?,?,?,?,?,?)', params);
         res.json({ message: 'Product saved' });
@@ -50,11 +59,11 @@ export const saveProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
     try {
-        const { intIdProduct, strProductName, strDescription,intCategorie,intColor,intSize, dblPrice,intQuantity} = req.body;
+        const {  strProductName, strDescription,intCategorie,intColor,intSize, dblPrice,intQuantity,intStatus} = req.body;
 
-        const params = [intIdProduct, strProductName, strDescription,intCategorie,intColor,intSize, dblPrice,intQuantity];
+        const params = [ strProductName, strDescription,intCategorie,intColor,intSize, dblPrice,intQuantity,intStatus];
         const conn = await getConnection();
-        const result = await conn.execute('CALL dbCumtual.sp_tbproducts_update(?,?,?,?,?,?,?,?,?)', params);
+        const result = await conn.execute('CALL dbCumtual.sp_tbproducts_update(?,?,?,?,?,?,?,?)', params);
         res.json({ message: 'Product updated' });
     } catch (error) {
         console.error('Error to execute stored procedure:', error);
@@ -82,4 +91,17 @@ export const getSize = async (req, res) => {
         console.error('Error to execute stored procedure:', error);
         res.status(500).json({ message: 'Error to get sizes' });
     }
+}
+
+export const getCategories = async (req, res) => {
+    try {
+        const conn = await getConnection();
+        const result = await conn.execute('CALL dbCumtual.sp_tbcategories_list');
+        res.json(result[0]);
+    } catch (error) {
+        console.error('Error to execute stored procedure:', error);
+        res.status(500).json({ message: 'Error to get categories' });
+    }
+
+
 }

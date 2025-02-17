@@ -19,7 +19,6 @@
             responsiveLayout="scroll" 
             [rows]="10" 
             [paginator]="true" 
-            [rowsPerPageOptions]="[10,20,30]" 
             [showCurrentPageReport]="true" 
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
             [rowHover]="true" dataKey="id">
@@ -67,7 +66,7 @@
                         </td>
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Categories</span>
-                            {{product.strNameCategorie}}
+                            {{product.strCategorieName}}
                         </td>
                        
                         <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
@@ -84,7 +83,7 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="productosAddDialog " [style]="{width: '650px'}" header="Add Product" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="productosAddDialog " [style]="{width: '650px'}" header="Add Product" [modal]="true" class="p-fluid" [draggable]="false" [resizable]="false">
             <ng-template pTemplate="content">
               
                 <div class="field">
@@ -100,10 +99,10 @@
                 <!-- <div class="card"> -->
                     <label for="categoria">Categories</label>
                     <p-dropdown 
-                        [options]="listProductosCategorias" 
+                        [options]="listCategories" 
                         [(ngModel)]="product1.intCategorie" 
-                        optionLabel="strNombreCategoria"
-                        optionValue="intCategorias"
+                        optionLabel="strCategorieName"                       
+                        optionValue="intCategorie"
                         [showClear]="true"
                         placeholder="--------CHOOSE---------" />
                 <!-- </div> -->
@@ -146,15 +145,30 @@
                         <p-inputNumber id="quantity" [(ngModel)]="product1.intQuantity"></p-inputNumber>
                     </div>
                 </div>
+
+                <div class="field">
+                    <label class="mb-3">Status</label>
+                    <div class="formgrid grid">
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton id="intStatus" name="chkestatus" value="1" [(ngModel)]="product1.strStatus"></p-radioButton>
+                            <label for="estatus">Activo</label>
+                        </div>
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton id="estatus" name="chkestatus" value="0" [(ngModel)]="product1.strStatus"></p-radioButton>
+                            <label for="estatus">Baja</label>
+                        </div>
+                       
+                    </div>
+                </div>
             </ng-template>
 
             <ng-template pTemplate="footer">
                 <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)=" fnAddProductos(producto1)"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)=" fnAddProductos(product1)"></button>
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="productosUpdateDialog" [style]="{width: '450px'}" header="Update Product" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="productosUpdateDialog" [style]="{width: '450px'}" header="Update Product" [modal]="true" class="p-fluid" [draggable]="false" [resizable]="false">
             <ng-template pTemplate="content">
               
                 <div class="field">
@@ -172,11 +186,11 @@
                 <!-- <div class="card "> -->
                     <label for="Categorias">Categories</label>
                     <p-dropdown 
-                    [options]="listProductosCategorias" 
+                    [options]="listCategories" 
                     [checkmark]="true" 
                     [(ngModel)]="product1.intCategorie" 
-                    optionLabel="strNombreCategoria"
-                    optionValue="intCategorias"
+                    optionLabel="strCategorieName"
+                    optionValue="intCategorie"
                     [showClear]="true"
                     placeholder="--------CHOOSE---------" />
                     <br>
@@ -185,10 +199,10 @@
                 <!-- <div class="card "> -->
                     <label for="Colores">Colors</label>
                     <p-dropdown 
-                    [options]="listColoresProductos" 
+                    [options]="listColorsProducts" 
                     [checkmark]="true" 
                     [(ngModel)]="product1.intColor" 
-                    optionLabel="strColor"
+                    optionLabel="strColorName"
                     optionValue="intColor"
                     [showClear]="true"
                     placeholder="--------CHOOSE---------" />
@@ -198,11 +212,11 @@
                 <!-- <div class="card "> -->
                     <label for="Talla">Size</label>
                     <p-dropdown 
-                    [options]="listTallasProductos" 
+                    [options]="listSizeProducts" 
                     [checkmark]="true" 
                     [(ngModel)]="product1.intSize" 
-                    optionLabel="strTalla"
-                    optionValue="intTalla"
+                    optionLabel="strSizeName"
+                    optionValue="intSize"
                     [showClear]="true"
                     placeholder="--------CHOOSE---------" />
             
@@ -217,6 +231,21 @@
                     <div class="field col">
                         <label for="quantity">Quantity</label>
                         <p-inputNumber id="quantity" [(ngModel)]="product1.intQuantity"></p-inputNumber>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="mb-3">Status</label>
+                    <div class="formgrid grid">
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton id="intStatus" name="chkestatus" value="1" [(ngModel)]="product1.intStatus"></p-radioButton>
+                            <label for="estatus">Activo</label>
+                        </div>
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton id="estatus" name="chkestatus" value="0" [(ngModel)]="product1.intStatus"></p-radioButton>
+                            <label for="estatus">Baja</label>
+                        </div>
+                       
                     </div>
                 </div>
             </ng-template>

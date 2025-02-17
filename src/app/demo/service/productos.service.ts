@@ -33,8 +33,12 @@ export class ProductosService {
     return this.https.get<any>(this.url + 'Inventory/ProductSize');
   }
 
+  listCategories():Observable<any[]> {
+    return this.https.get<any>(this.url + 'Inventory/Categories');
+  }
+
   addProductos(productos:Productos1):Observable<Productos1> {
-    return this.https.post<Productos1>(this.url +'Inventory/SaveProductos',productos);
+    return this.https.post<Productos1>(this.url +'Inventory/SaveProducts',productos);
   }
   updateProductos( productos:Productos1):Observable<Productos1> {
     return this.https.post<Productos1>(this.url +'Inventory/UpdateProdcutos',productos);

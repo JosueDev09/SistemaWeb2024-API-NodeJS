@@ -15,6 +15,8 @@ export class ProductosComponent implements OnInit {
     listColorsProducts: any[] = [];
 
     listSizeProducts: any[] = [];
+
+    listCategories: any[] = [];
    
     productosUpdateDialog: boolean = false;
 
@@ -38,8 +40,6 @@ export class ProductosComponent implements OnInit {
 
     product1: Productos1 = {};
 
-    listProductosCategorias: any[] = [];
-
     selectedProducts: Product[] = [];
 
     submitted: boolean = false;
@@ -54,7 +54,7 @@ export class ProductosComponent implements OnInit {
 
     ngOnInit() {
        this.fnListProducts();
-       this.fnListProductosCategorias();
+       this.fnListCategories();
        this.fnListColoresProductos();
        this. fnListTallasProductos();
     }
@@ -71,19 +71,22 @@ export class ProductosComponent implements OnInit {
         }
           );
     }
-    fnListProductosCategorias(){
-        this.productoService.listProductosCategorias().subscribe(
-            (res:any) => {
-              if(Array.isArray(res)) 
-              {
-                this.listProductosCategorias = res[0];
-              } else {
-                console.error('Respuesta no válida:', res);
-                this.listProductosCategorias= [];
-              }                
-            }          
-          );
-          }
+   
+
+          fnListCategories(){
+            this.productoService.listCategories().subscribe(
+              (res:any) => {
+                if(Array.isArray(res)) 
+                {
+                  this.listCategories = res[0];
+                } else {
+                  console.error('Respuesta no válida:', res);
+                  this.listCategories= [];
+                }                
+              }  
+                
+              );
+              }
 
           fnListColoresProductos(){
             this.productoService.listColoresProductos().subscribe(
@@ -115,9 +118,9 @@ export class ProductosComponent implements OnInit {
                   );
                   }
 
-          fnAddProductos(productos:Productos1):void{
+          fnAddProductos(products:Productos1):void{
             // alert("entro")
-             this.productoService.addProductos(productos).subscribe(
+             this.productoService.addProductos(products).subscribe(
                res=>{
                if(res){
                 this.messageService.add({ severity: 'success', summary: 'Succsesfully', detail: 'Created Product', life: 3000 });
@@ -142,14 +145,15 @@ export class ProductosComponent implements OnInit {
          
            fnUpdateProduct(select:any)
            {
-            this.product1.intProduct = select.intProduct;
+          // this.product1.intProduct = select.intProduct;
             this.product1.strNameProduct = select.strNameProduct;
             this.product1.strDescriptionProduct = select.strDescriptionProduct;
             this.product1.intQuantity = select.intQuantity;        
             this.product1.dblPrice = select.dblPrice;        
-            this.product1.intQuantity = select.intCantidad;  
             this.product1.intColor = select.intColor;  
-            this.product1.intSize = select.intSize;                
+            this.product1.intSize = select.intSize;  
+            this.product1.intCategorie = select.intCategorie;   
+            this.product1.intStatus = select.intStatus;           
             this.productosUpdateDialog = true;
            
            }
