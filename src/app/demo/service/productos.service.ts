@@ -26,17 +26,17 @@ export class ProductosService {
   }
 
   listColoresProductos():Observable<any[]> {
-    return this.https.get<any>(this.url + 'Inventario/ColoresProductos');
+    return this.https.get<any>(this.url + 'Inventory/ProductColor');
   }
 
-  listTallasProductos():Observable<any[]> {
-    return this.https.get<any>(this.url + 'Inventario/TallaProductos');
+  listSizeProductos():Observable<any[]> {
+    return this.https.get<any>(this.url + 'Inventory/ProductSize');
   }
 
   addProductos(productos:Productos1):Observable<Productos1> {
-    return this.https.post<Productos1>(this.url +'Inventario/SaveProductos',productos);
+    return this.https.post<Productos1>(this.url +'Inventory/SaveProductos',productos);
   }
   updateProductos( productos:Productos1):Observable<Productos1> {
-    return this.https.post<Productos1>(this.url +'Inventario/UpdateProdcutos',productos);
+    return this.https.post<Productos1>(this.url +'Inventory/UpdateProdcutos',productos);
   }
 }

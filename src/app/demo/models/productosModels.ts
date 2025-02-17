@@ -24,7 +24,7 @@ export interface Productos{
     // strStatus?:string;  
      Status?:string;
      intColor?: number;
-     strColor?: string;  
+     strColorName?: string;  
      intSize?:number;
-     strSize?:string;
+     strSizeName?:string;
 }

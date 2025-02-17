@@ -84,7 +84,7 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="productosAddDialog " [style]="{width: '450px'}" header="Add Product" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="productosAddDialog " [style]="{width: '650px'}" header="Add Product" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
               
                 <div class="field">
@@ -111,10 +111,10 @@
                 <!-- <div class="card "> -->
                     <label for="Color">Color</label>
                     <p-dropdown 
-                    [options]="listColoresProductos" 
+                    [options]="listColorsProducts" 
                     [checkmark]="true" 
                     [(ngModel)]="product1.intColor" 
-                    optionLabel="strColor"
+                    optionLabel="strColorName"
                     optionValue="intColor"
                     [showClear]="true"
                     placeholder="--------CHOOSE---------" />
@@ -124,11 +124,11 @@
                 <!-- <div class="card "> -->
                     <label for="Talla">Size</label>
                     <p-dropdown 
-                    [options]="listTallasProductos" 
+                    [options]="listSizeProducts" 
                     [checkmark]="true" 
                     [(ngModel)]="product1.intSize" 
-                    optionLabel="strTalla"
-                    optionValue="intTalla"
+                    optionLabel="strSizeName"
+                    optionValue="intSize"
                     [showClear]="true"
                     placeholder="--------CHOOSE---------" />
             

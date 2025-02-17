@@ -73,39 +73,44 @@ export class ProductosComponent implements OnInit {
     }
     fnListProductosCategorias(){
         this.productoService.listProductosCategorias().subscribe(
-            res => {
-             this.listProductosCategorias= res;
-              console.log(res);
-        
-            }, error => {
-              console.log(error);
-            }
-            
+            (res:any) => {
+              if(Array.isArray(res)) 
+              {
+                this.listProductosCategorias = res[0];
+              } else {
+                console.error('Respuesta no válida:', res);
+                this.listProductosCategorias= [];
+              }                
+            }          
           );
           }
 
           fnListColoresProductos(){
             this.productoService.listColoresProductos().subscribe(
-                res => {
-                 this.listColorsProducts= res;
-                  console.log(res);
-            
-                }, error => {
-                  console.log(error);
-                }
+              (res:any) => {
+                if(Array.isArray(res)) 
+                {
+                  this.listColorsProducts = res[0];
+                } else {
+                  console.error('Respuesta no válida:', res);
+                  this.listColorsProducts= [];
+                }                
+              }  
                 
               );
               }
 
               fnListTallasProductos(){
-                this.productoService.listTallasProductos().subscribe(
-                    res => {
-                     this.listSizeProducts= res;
-                      console.log(res);
-                
-                    }, error => {
-                      console.log(error);
-                    }
+                this.productoService.listSizeProductos().subscribe(
+                  (res:any) => {
+                    if(Array.isArray(res)) 
+                    {
+                      this.listSizeProducts = res[0];
+                    } else {
+                      console.error('Respuesta no válida:', res);
+                      this.listSizeProducts<= [];
+                    }                
+                  } 
                     
                   );
                   }
