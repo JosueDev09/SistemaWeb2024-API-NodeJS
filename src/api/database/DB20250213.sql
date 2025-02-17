@@ -575,5 +575,82 @@ DELIMITER ;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+DELIMITER //
+
+CREATE PROCEDURE `sp_tbproducts_save` (
+    IN p_strProductName VARCHAR(250),
+    IN p_strDescription VARCHAR(250),
+    IN p_intCategorie INT,
+    IN p_intColor INT,
+    IN p_intSize INT,
+    IN p_dblPrice DECIMAL(10,2),  -- Cambié el tipo a DECIMAL por la naturaleza del precio
+    IN p_intQuantity INT,
+    IN p_intStatus INT
+)
+BEGIN
+    -- Declaración de la variable para el código de producto
+    DECLARE p_strCodeProduct VARCHAR(250);
+
+    -- Generación del código de producto aleatorio
+    SET p_strCodeProduct = CONCAT(
+        CHAR(65 + FLOOR(RAND() * 26)),  -- Letra aleatoria entre A y Z
+        CHAR(65 + FLOOR(RAND() * 26)),  -- Letra aleatoria entre A y Z
+        CHAR(65 + FLOOR(RAND() * 26)),  -- Letra aleatoria entre A y Z
+        '-',                           -- Guion separador
+        FLOOR(1000 + (RAND() * 9000))   -- Número aleatorio de 4 dígitos
+    );
+
+    -- Verificación si el producto ya existe
+    IF NOT EXISTS(SELECT 1 FROM tbProducts WHERE strCodeProduct = p_strCodeProduct) THEN
+        -- Insertar el producto si no existe
+        INSERT INTO tbProducts (
+            strCodeProduct, 
+            strNameproduct, 
+            dblPrice, 
+            intQuantity, 
+            intCategorie, 
+            intStatus, 
+            datDate, 
+            strDescriptionProduct, 
+            intColorProduct, 
+            intSizeProduct
+        )
+        VALUES (
+            p_strCodeProduct, 
+            p_strProductName, 
+            p_dblPrice, 
+            p_intQuantity, 
+            p_intCategorie, 
+            p_intStatus, 
+            NOW(), 
+            p_strDescription, 
+            p_intColor, 
+            p_intSize
+        );
+    ELSE
+        -- Lanzar un error si el producto ya existe
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'EL PRODUCTO YA EXISTE';
+    END IF;
+
+END //
+
+DELIMITER ;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_tbColor_list`()
+BEGIN
+	SELECT 
+		intColor,
+        strColorName
+	FROM tbproductscolor;
+
+END
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_tbProductsSize_list`()
+BEGIN
+	SELECT
+		intSize,
+        strSizeName
+    FROM tbProductsSize;
+END
 
 -- Dump completed on 2025-02-13 18:20:09
