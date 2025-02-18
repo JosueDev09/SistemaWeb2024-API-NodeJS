@@ -1,6 +1,6 @@
 import { getConnection } from "../database/connection.js";
 
-// Function to list employees
+// Funcion para obtener los productos
 export const listProducts = async (req, res) => {
     try {
         // Get a database connection
@@ -17,7 +17,7 @@ export const listProducts = async (req, res) => {
     }
 }
 
-// Function to list employees
+// Funcion para obtener productos destacados
 export const getProductsDes = async (req, res) => {
     try {
         // Get a database connection
@@ -34,6 +34,7 @@ export const getProductsDes = async (req, res) => {
     }
 }
 
+// Funcion para guardar un producto
 export const saveProduct = async (req, res) => {
     try {
         const { strNameProduct, strDescriptionProduct,intCategorie,intColor,intSize, dblPrice,intQuantity,strStatus} = req.body;
@@ -57,6 +58,7 @@ export const saveProduct = async (req, res) => {
     }
 }
 
+// Funcion para actualizar un producto
 export const updateProduct = async (req, res) => {
     try {
         const {  strProductName, strDescription,intCategorie,intColor,intSize, dblPrice,intQuantity,intStatus} = req.body;
@@ -71,6 +73,7 @@ export const updateProduct = async (req, res) => {
     }
 }
 
+// Funcion para obtener los colores
 export const getColor = async (req, res) => {
     try {
         const conn = await getConnection();
@@ -82,6 +85,7 @@ export const getColor = async (req, res) => {
     }
 }
 
+// Funcion para obtener los tamaños
 export const getSize = async (req, res) => {
     try {
         const conn = await getConnection();
@@ -93,6 +97,7 @@ export const getSize = async (req, res) => {
     }
 }
 
+// Funcion para obtener las categorias
 export const getCategories = async (req, res) => {
     try {
         const conn = await getConnection();
@@ -104,4 +109,22 @@ export const getCategories = async (req, res) => {
     }
 
 
+}
+
+// Funcion para obtener el detalle de un producto
+export const getProductoDetalle = async (req, res) => {
+    try {
+        const { strNombreCategoria,strNombreProducto } = req.query;
+        const params =[
+            strNombreCategoria,
+            strNombreProducto
+        ]
+        //console.log('PARAMETROS:',params);
+        const conn = await getConnection();
+        const result = await conn.execute('CALL dbCumtual.sp_tbProducto_Detalle(?,?)', params);
+        res.json(result[0]);
+    } catch (error) {
+        console.error('Error to execute stored procedure:', error);
+        res.status(500).json({ message: 'Error to get product detail' });
+    }
 }

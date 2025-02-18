@@ -1,5 +1,5 @@
 import {Router} from "express";
-import { listProducts,getProductsDes,saveProduct,getColor,getSize, updateProduct, getCategories } from '../controllers/products.controller.js';
+import { listProducts,getProductsDes,saveProduct,getColor,getSize, updateProduct, getCategories, getProductoDetalle } from '../controllers/products.controller.js';
 import { get } from "http";
 
 
@@ -22,5 +22,9 @@ router.get("/Inventory/ProductColor",getColor);
 router.get("/Ecommerce/ProductosDestacados",getProductsDes);
 
 router.get("/Inventory/Categories",getCategories);
+
+router.get("/Ecommerce/Categorias",getCategories);
+
+router.get("/Ecommerce/Producto-Detalle",getProductoDetalle);
 
 export default router;
