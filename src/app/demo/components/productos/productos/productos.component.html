@@ -75,7 +75,10 @@
                         <td>
                             <div class="flex">
                                 <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)=" fnUpdateProduct(product)"></button>
+                                <button pButton pRipple icon="pi pi-box" class="p-button-rounded p-button-info mr-2" (click)="fnInventoryOpenUpdate(product.intProduct)"></button>
                                 <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
+                                
+                             
                             </div>
                         </td>
                     </tr>
@@ -83,7 +86,7 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="productosAddDialog " [style]="{width: '650px'}" header="Add Product" [modal]="true" class="p-fluid" [draggable]="false" [resizable]="false">
+        <p-dialog [(visible)]="productosAddDialog " [style]="{width: '850px'}" header="Add Product" [modal]="true" class="p-fluid" [draggable]="false" [resizable]="false">
             <ng-template pTemplate="content">
               
                 <div class="field">
@@ -107,31 +110,7 @@
                         placeholder="--------CHOOSE---------" />
                 <!-- </div> -->
                 <br>
-                <!-- <div class="card "> -->
-                    <label for="Color">Color</label>
-                    <p-dropdown 
-                    [options]="listColorsProducts" 
-                    [checkmark]="true" 
-                    [(ngModel)]="product1.intColor" 
-                    optionLabel="strColorName"
-                    optionValue="intColor"
-                    [showClear]="true"
-                    placeholder="--------CHOOSE---------" />
-            
-                <!-- </div> -->
-                <br>
-                <!-- <div class="card "> -->
-                    <label for="Talla">Size</label>
-                    <p-dropdown 
-                    [options]="listSizeProducts" 
-                    [checkmark]="true" 
-                    [(ngModel)]="product1.intSize" 
-                    optionLabel="strSizeName"
-                    optionValue="intSize"
-                    [showClear]="true"
-                    placeholder="--------CHOOSE---------" />
-            
-                <!-- </div> -->
+
                 
                 <br>
 
@@ -141,7 +120,7 @@
                         <p-inputNumber id="price" [(ngModel)]="product1.dblPrice" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
                     </div>
                     <div class="field col">
-                        <label for="quantity">Quantity</label>
+                        <label for="quantity">Total Quantity</label>
                         <p-inputNumber id="quantity" [(ngModel)]="product1.intQuantity"></p-inputNumber>
                     </div>
                 </div>
@@ -165,10 +144,11 @@
             <ng-template pTemplate="footer">
                 <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
                 <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)=" fnAddProductos(product1)"></button>
+                
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="productosUpdateDialog" [style]="{width: '450px'}" header="Update Product" [modal]="true" class="p-fluid" [draggable]="false" [resizable]="false">
+        <p-dialog [(visible)]="productosUpdateDialog" [style]="{width: '650px'}" header="Update Product" [modal]="true" class="p-fluid" [draggable]="false" [resizable]="false">
             <ng-template pTemplate="content">
               
                 <div class="field">
@@ -197,31 +177,8 @@
                     <br>
                 <!-- </div> -->
                 <!-- <div class="card "> -->
-                    <label for="Colores">Colors</label>
-                    <p-dropdown 
-                    [options]="listColorsProducts" 
-                    [checkmark]="true" 
-                    [(ngModel)]="product1.intColor" 
-                    optionLabel="strColorName"
-                    optionValue="intColor"
-                    [showClear]="true"
-                    placeholder="--------CHOOSE---------" />
-                    <br>
-                <!-- </div> -->
-                <br>
-                <!-- <div class="card "> -->
-                    <label for="Talla">Size</label>
-                    <p-dropdown 
-                    [options]="listSizeProducts" 
-                    [checkmark]="true" 
-                    [(ngModel)]="product1.intSize" 
-                    optionLabel="strSizeName"
-                    optionValue="intSize"
-                    [showClear]="true"
-                    placeholder="--------CHOOSE---------" />
-            
-                <!-- </div> -->
-                <br>
+                   
+               
 
                 <div class="formgrid grid">
                     <div class="field col">
@@ -253,31 +210,49 @@
             <ng-template pTemplate="footer">
                 <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
                 <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)=" fnUpdateProductos(product1)"></button>
+                <button pButton pRipple label="Inventario" icon="pi pi-box" class="p-button-text" (click)="fnInventoryOpenUpdate()"></button>
+            </ng-template>
+        </p-dialog>
+
+        
+        
+        <p-dialog [(visible)]="inventoryDialogUpdate" [style]="{width: '700px'}" header="Inventory Product" [modal]="true" class="p-fluid" [draggable]="false" [resizable]="false">
+            <ng-template pTemplate="content" >
+                
+                <div class="formgrid grid" *ngFor="let inventoryProduct1 of listInventoryProducts">
+                    <div class="field col">
+                        <label for="Color">Color</label>
+                        <input disabled type="text" pInputText id="color" [(ngModel)]="inventoryProduct1.strColorName" required autofocus />
+                       
+                    </div>
+                    <div class="field col">
+                        <label for="quantity">S</label>
+                        <p-inputNumber id="quantity" [(ngModel)]="inventoryProduct1.Quantity_S" ></p-inputNumber>
+                    </div>
+                    <div class="field col">
+                        <label for="quantity">M</label>
+                        <p-inputNumber id="quantity" [(ngModel)]="inventoryProduct1.Quantity_M" ></p-inputNumber>
+                    </div>
+                    <div class="field col">
+                        <label for="quantity">L</label>
+                        <p-inputNumber id="quantity" [(ngModel)]="inventoryProduct1.Quantity_L" ></p-inputNumber>
+                    </div>
+                    <div class="field col">
+                        <label for="quantity">XL</label>
+                        <p-inputNumber id="quantity" [(ngModel)]="inventoryProduct1.Quantity_XL" ></p-inputNumber>
+                    </div>
+                </div>
+              
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideinventoryDialogUpdate()"></button>
+                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)=" fnUpdateProductos(product1)"></button>
             </ng-template>
         </p-dialog>
 
         
 
-        <p-dialog [(visible)]="deleteProductDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
-            <div class="flex align-items-center justify-content-center">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <!-- <span *ngIf="product">Are you sure you want to delete <b>{{product.name}}</b>?</span> -->
-            </div>
-            <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteProductDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
-            </ng-template>
-        </p-dialog>
-
-        <p-dialog [(visible)]="deleteProductsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
-            <div class="flex align-items-center justify-content-center">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Are you sure you want to delete selected products?</span>
-            </div>
-            <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteProductsDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
-            </ng-template>
-        </p-dialog>
+       
     </div>
 </div>

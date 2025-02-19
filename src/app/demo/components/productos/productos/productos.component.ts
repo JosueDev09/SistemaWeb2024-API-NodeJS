@@ -5,6 +5,7 @@ import { Table } from 'primeng/table';
 import { ProductService } from 'src/app/demo/service/product.service';
 import { Productos, Productos1 } from 'src/app/demo/models/productosModels';
 import { ProductosService } from 'src/app/demo/service/productos.service';
+import { InventoryProduct, InventoryProduct1 } from 'src/app/demo/models/inventoryProductModels';
 
 @Component({
     templateUrl: './productos.component.html',
@@ -14,6 +15,8 @@ export class ProductosComponent implements OnInit {
 
     listColorsProducts: any[] = [];
 
+    listInventoryProducts: any[] = [];
+
     listSizeProducts: any[] = [];
 
     listCategories: any[] = [];
@@ -22,6 +25,10 @@ export class ProductosComponent implements OnInit {
 
     productosAddDialog: boolean = false;
 
+    inventoryDialogAdd: boolean = false;
+
+    inventoryDialogUpdate:boolean = false;
+
     deleteProductDialog: boolean = false;
 
     deleteProductsDialog: boolean = false;
@@ -29,6 +36,15 @@ export class ProductosComponent implements OnInit {
    // products: Product[] = [];
 
     //product: Product = {};
+
+    
+    inventoryProducts1: InventoryProduct1[] = [];
+
+    inventoryProduct1: InventoryProduct1 = {};
+
+    inventoryProducts: InventoryProduct[] = [];
+
+    inventoryProduct: InventoryProduct []= [];
 
     product: Product[] = [];
 
@@ -56,7 +72,7 @@ export class ProductosComponent implements OnInit {
        this.fnListProducts();
        this.fnListCategories();
        this.fnListColoresProductos();
-       this. fnListTallasProductos();
+      
     }
 
     fnListProducts(){
@@ -71,9 +87,8 @@ export class ProductosComponent implements OnInit {
         }
           );
     }
-   
-
-          fnListCategories(){
+    
+     fnListCategories(){
             this.productoService.listCategories().subscribe(
               (res:any) => {
                 if(Array.isArray(res)) 
@@ -88,7 +103,7 @@ export class ProductosComponent implements OnInit {
               );
               }
 
-          fnListColoresProductos(){
+      fnListColoresProductos(){
             this.productoService.listColoresProductos().subscribe(
               (res:any) => {
                 if(Array.isArray(res)) 
@@ -103,22 +118,11 @@ export class ProductosComponent implements OnInit {
               );
               }
 
-              fnListTallasProductos(){
-                this.productoService.listSizeProductos().subscribe(
-                  (res:any) => {
-                    if(Array.isArray(res)) 
-                    {
-                      this.listSizeProducts = res[0];
-                    } else {
-                      console.error('Respuesta no válida:', res);
-                      this.listSizeProducts<= [];
-                    }                
-                  } 
-                    
-                  );
-                  }
+     
 
-          fnAddProductos(products:Productos1):void{
+    
+
+        fnAddProductos(products:Productos1):void{
             // alert("entro")
              this.productoService.addProductos(products).subscribe(
                res=>{
@@ -145,18 +149,38 @@ export class ProductosComponent implements OnInit {
          
            fnUpdateProduct(select:any)
            {
-          // this.product1.intProduct = select.intProduct;
+            this.product1.intProduct = select.intProduct;
             this.product1.strNameProduct = select.strNameProduct;
             this.product1.strDescriptionProduct = select.strDescriptionProduct;
             this.product1.intQuantity = select.intQuantity;        
             this.product1.dblPrice = select.dblPrice;        
-            this.product1.intColor = select.intColor;  
-            this.product1.intSize = select.intSize;  
             this.product1.intCategorie = select.intCategorie;   
             this.product1.intStatus = select.intStatus;           
             this.productosUpdateDialog = true;
+            
            
            }
+
+           fnListInventoryProductos(idProduct:number){
+          
+            this.productoService.listInventoyProducts(idProduct).subscribe(
+              (res:any) => {
+                if(Array.isArray(res)) 
+                {
+                  this.listInventoryProducts = res[0];
+                 
+                } else {
+                  console.error('Respuesta no válida:', res);
+                  this.listInventoryProducts= [];
+                }                
+              }  
+                
+              );
+              }
+            
+              
+
+          
          
            fnUpdateProductos(productos:Productos1):void{
              // alert("entro")
@@ -174,18 +198,28 @@ export class ProductosComponent implements OnInit {
                 }
               });
             }
-
-    
-
-    // openNew() {
-    //     this.product = {};
-    //     this.submitted = false;
-    //     this.productosAdd = true;
-    // }
-
+      
+    //ABRIR Y CERRAR MODALES
+    fnInventoryOpenUpdate(intProduct:number) {
+      this.fnListInventoryProductos(intProduct);
+      this.inventoryDialogUpdate = true;
+    }
+    fnInventoryOpen() {
+      this.inventoryDialogAdd = true;
+    }
+    hideinventoryDialog() {
+      this.inventoryDialogAdd = false;   
+    }
+      //ABRIR Y CERRAR MODALES
+   
+    hideinventoryDialogUpdate() {
+      this.inventoryDialogUpdate = false;   
+    }
+      //ABRIR Y CERRAR MODALES
     fnOpenAddProductModal()
     {
       this.productosAddDialog = true;
+      
       this.fnClear();
     }
 
@@ -193,42 +227,10 @@ export class ProductosComponent implements OnInit {
         this.deleteProductsDialog = true;
     }
 
-    // deleteProduct(product: Product) {
-    //     this.deleteProductDialog = true;
-    //     this.product = { ...product };
-    // }
-
-    // confirmDelete() {
-    //     this.deleteProductDialog = false;
-    //     this.products = this.products.filter(val => val.id !== this.product.id);
-    //     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Producto Deleted', life: 3000 });
-    //     this.product = {};
-    // }
-
     hideDialog() {
         this.productosUpdateDialog = false;
         this.productosAddDialog = false;
         this.submitted = false;
         this.fnClear();
     }
-
-    
-
-    // findIndexById(id: string): number {
-    //     let index = -1;
-    //     for (let i = 0; i < this.products.length; i++) {
-    //         if (this.products[i].id === id) {
-    //             index = i;
-    //             break;
-    //         }
-    //     }
-
-    //     return index;
-    // }
-
-    
-
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
-    }
-}
+  }

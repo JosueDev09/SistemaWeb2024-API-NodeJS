@@ -1,5 +1,5 @@
 import {Router} from "express";
-import { listProducts,getProductsDes,saveProduct,getColor,getSize, updateProduct, getCategories, getProductoDetalle } from '../controllers/products.controller.js';
+import { listProducts,getProductsDes,saveProduct,getColor,getSize, updateProduct, getCategories, getProductoDetalle, getInventoryProducts } from '../controllers/products.controller.js';
 import { get } from "http";
 
 
@@ -10,6 +10,8 @@ const router = Router();
 router.get("/Inventory/listSizeProducts");
 
 router.get("/Inventory/ProductsList", listProducts);
+
+router.get("/Inventory/InventoryProductsList", getInventoryProducts);
 
 router.post("/Inventory/SaveProducts",saveProduct);
 

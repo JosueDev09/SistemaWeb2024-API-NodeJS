@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Productos, Productos1 } from '../models/productosModels';
+import { InventoryProduct } from '../models/inventoryProductModels';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,14 @@ export class ProductosService {
    listProducts(): Observable<Productos[]> {
     // Sends a GET request to the specified URL and returns an Observable of Users array
     return this.https.get<Productos[]>(this.url + 'Inventory/ProductsList');
+  }
+  listInventoyProducts(idProduct:any): Observable<InventoryProduct[]> {
+     let params = new HttpParams();
+    
+          if (idProduct) {
+            params = params.set('idProduct', idProduct.toString());
+          }
+    return this.https.get<InventoryProduct[]>(this.url + 'Inventory/InventoryProductsList', { params });
   }
 
   listProductosCategorias():Observable<any[]> {

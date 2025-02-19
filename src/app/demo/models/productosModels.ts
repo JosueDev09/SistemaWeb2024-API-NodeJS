@@ -1,5 +1,5 @@
 export class Productos1{
-    //intProduct?: number = 0;
+    intProduct?: number = 0;
     //strCodigoProducto?: string = ''; 
     strNameProduct?:string = '';  
     strDescriptionProduct?:string = '';  

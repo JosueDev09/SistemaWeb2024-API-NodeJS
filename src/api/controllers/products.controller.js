@@ -17,6 +17,21 @@ export const listProducts = async (req, res) => {
     }
 }
 
+//Funcion para obtener los productos de inventario
+export const getInventoryProducts = async (req, res) => {
+        try{
+            const {idProduct} = req.query;
+            const params = [idProduct];
+
+            const conn = await getConnection();
+            const result = await conn.execute('CALL dbCumtual.sp_tbInventory_Products_List(?)',params);
+            res.json(result[0]);
+        }catch(error){
+            console.error('Error to execute stored procedure:', error);
+            res.status(500).json({ message: 'Error to get products' });
+        }
+}
+
 // Funcion para obtener productos destacados
 export const getProductsDes = async (req, res) => {
     try {
