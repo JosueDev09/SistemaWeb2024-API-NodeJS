@@ -32,6 +32,61 @@ export const getInventoryProducts = async (req, res) => {
         }
 }
 
+//Funcion para guardar los productos de inventario
+export const saveInventoryProducts = async (req,res) => {
+    const {intProducto,intColor,intSize,intQuenaity} = req.body;
+    console.log('Datos front', req.body);
+
+    try{
+        const params =[intProducto,intColor,intSize,intQuenaity];
+        const conn = await getConnection();
+        const res = await conn.execute('CALL dbCumtual.sp_tbProducts_Inventory_Save(?,?,?,?)',params);
+
+        res.json({message:'Invenotry Save'});
+        
+    } catch(e)
+    {
+        console.error('Error to execute stored procedure');
+        res.status(500).json({message:'Error to save inventory'});
+    }
+
+}
+
+// Funcion para obtener los colores de un producto
+export const getProductColors = async (req, res) => {
+    try {
+        const { strNombreProducto } = req.query;
+
+        //console.log(strNombreProducto);
+        const params = [strNombreProducto];
+
+        const conn = await getConnection();
+        const result = await conn.execute('CALL dbCumtual.sp_tbColors_available_products(?)', params);
+        res.json(result[0]);
+    } catch (error) {
+        console.error('Error to execute stored procedure:', error);
+        res.status(500).json({ message: 'Error to get product colors' });
+    }
+}
+
+export const getProductSize = async (req, res) => {
+    try {
+        const { strNombreProducto,strNombreColor } = req.query;
+
+        console.log('Datos Front',strNombreProducto,strNombreColor);
+        const params = [strNombreProducto,strNombreColor];
+
+        const conn = await getConnection();
+        const result = await conn.execute('CALL dbCumtual.sp_tbSize_available_products(?,?)', params);
+        res.json(result[0]);
+    } catch (error) {
+        console.error('Error to execute stored procedure:', error);
+        res.status(500).json({ message: 'Error to get product size' });
+    }
+}
+
+
+
 // Funcion para obtener productos destacados
 export const getProductsDes = async (req, res) => {
     try {

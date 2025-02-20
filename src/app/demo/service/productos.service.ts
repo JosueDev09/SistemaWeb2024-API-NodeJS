@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Productos, Productos1 } from '../models/productosModels';
-import { InventoryProduct } from '../models/inventoryProductModels';
+import { InventoryProduct, InventoryProduct1 } from '../models/inventoryProductModels';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +28,10 @@ export class ProductosService {
             params = params.set('idProduct', idProduct.toString());
           }
     return this.https.get<InventoryProduct[]>(this.url + 'Inventory/InventoryProductsList', { params });
+  }
+
+  updateInventoryProducts(inventory:InventoryProduct1):Observable<InventoryProduct1>{
+    return this.https.post<InventoryProduct1>(this.url +'Inventory/InventoryProductsSave',inventory);
   }
 
   listProductosCategorias():Observable<any[]> {

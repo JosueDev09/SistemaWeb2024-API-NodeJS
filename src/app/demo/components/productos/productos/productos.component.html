@@ -210,7 +210,7 @@
             <ng-template pTemplate="footer">
                 <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
                 <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)=" fnUpdateProductos(product1)"></button>
-                <button pButton pRipple label="Inventario" icon="pi pi-box" class="p-button-text" (click)="fnInventoryOpenUpdate()"></button>
+            
             </ng-template>
         </p-dialog>
 
@@ -227,19 +227,19 @@
                     </div>
                     <div class="field col">
                         <label for="quantity">S</label>
-                        <p-inputNumber id="quantity" [(ngModel)]="inventoryProduct1.Quantity_S" ></p-inputNumber>
+                        <p-inputNumber disabled id="quantity" [(ngModel)]="inventoryProduct1.Quantity_S" ></p-inputNumber>
                     </div>
                     <div class="field col">
                         <label for="quantity">M</label>
-                        <p-inputNumber id="quantity" [(ngModel)]="inventoryProduct1.Quantity_M" ></p-inputNumber>
+                        <p-inputNumber disabled id="quantity" [(ngModel)]="inventoryProduct1.Quantity_M" ></p-inputNumber>
                     </div>
                     <div class="field col">
                         <label for="quantity">L</label>
-                        <p-inputNumber id="quantity" [(ngModel)]="inventoryProduct1.Quantity_L" ></p-inputNumber>
+                        <p-inputNumber disabled id="quantity" [(ngModel)]="inventoryProduct1.Quantity_L" ></p-inputNumber>
                     </div>
                     <div class="field col">
                         <label for="quantity">XL</label>
-                        <p-inputNumber id="quantity" [(ngModel)]="inventoryProduct1.Quantity_XL" ></p-inputNumber>
+                        <p-inputNumber disabled id="quantity" [(ngModel)]="inventoryProduct1.Quantity_XL" ></p-inputNumber>
                     </div>
                 </div>
               
@@ -247,7 +247,7 @@
 
             <ng-template pTemplate="footer">
                 <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideinventoryDialogUpdate()"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)=" fnUpdateProductos(product1)"></button>
+                <!-- <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)=" fnSaveInventoryProductos(inventoryProduct1)"></button> POR REVISAR MAS ADELANTE -->
             </ng-template>
         </p-dialog>
 

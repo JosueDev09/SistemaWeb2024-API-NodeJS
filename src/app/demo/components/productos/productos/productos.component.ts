@@ -177,6 +177,23 @@ export class ProductosComponent implements OnInit {
                 
               );
               }
+
+              fnSaveInventoryProductos(inventoryProduct1:InventoryProduct1):void{
+                // alert("entro")
+                console.log('Datos:',this.listInventoryProducts);
+                 this.productoService.updateInventoryProducts(inventoryProduct1).subscribe(
+                   res=>{
+                   
+                   if(res){
+                     this.messageService.add({ severity: 'success', summary: 'Succsesfully', detail: 'Updated Inventory', life: 3000 });
+                     console.log(res);               
+                   
+                   }
+                   else{
+                     alert("Error")
+                   }
+                 });
+               }
             
               
 
