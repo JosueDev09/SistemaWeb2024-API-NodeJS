@@ -37,4 +37,6 @@ router.get("/Ecommerce/ProductoColores",getProductColors)
 
 router.get("/Ecommerce/ProductoTallas",getProductSize)
 
+router.get("/Ecommerce/Productos", listProducts);
+
 export default router;
