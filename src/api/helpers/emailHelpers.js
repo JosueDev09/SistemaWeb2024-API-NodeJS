@@ -1,13 +1,7 @@
 import nodemailer from "nodemailer";
-
-
-
-    
-
       //Información del email
 
     
-
     export  async function senEmailVerify(email, name,token) {
 
       const verificationLink = `http://localhost:3000/api/auth/verify-email?token=${token}`;
